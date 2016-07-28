@@ -1,6 +1,3 @@
-@bg-color: #1c222b;
-@a-color: #ff3d00;
-@a-color-hover: #ff3d00;
 .disk .outer {
   background-color: #000;
   height: 50px;
@@ -23,101 +20,106 @@
 }
 body {
   margin: 0;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
   color: #333;
-  background-color: @bg-color;
-  color:#fff;
-  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-  h1,h2,h3,h4,h5,h6 {
-    color:#fb8d4b;
-  }
-  a {
-  color:@a-color;
-  }
-  a:hover {
-    color:@a-color-hover;
-  }
-  input[type="button"], input[type="reset"], input[type="submit"] {
-    color:#000;
-  }
+  background-color: #1c222b;
+  color: #fff;
+  padding-top: 60px;
+  /* 60px to make the container go all the way to the bottom of the topbar */
 }
-
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  color: #fb8d4b;
+}
+body a {
+  color: #ff3d00;
+}
+body a:hover {
+  color: #ff3d00;
+}
+body input[type="button"],
+body input[type="reset"],
+body input[type="submit"] {
+  color: #000;
+}
 .container {
   padding-right: 0;
   padding-left: 0;
 }
-
 .navbar-inverse {
-  background:none #100D0D;
+  background: none #100D0D;
   border: 1px solid #313131;
 }
-
 ul.mainmenu {
   padding: 0;
   margin: 0;
   background: transparent;
   float: left;
   height: 55px;
-  width:100%;
-  li {
-    float: left;
-    display: inline;
-    position: relative;
-    list-style: none;
-    a {
-      padding: 18px 15px;
-      float: left;
-      display: block;
-      color: #ccc;
-      border-bottom: 1px solid transparent;
-    }
-    a:hover {
-      text-decoration: none;
-      border-bottom: 1px solid orange;
-    }
-    ul {
-      position: absolute;
-      left: 0;
-      top: 100%;
-      background: none #100d0d;
-      display: none;
-      padding: 0;
-    }
-    ul li.active a, li a:hover {
-      text-decoration: none;
-      border-bottom: 1px solid orange;
-    }
-    ul ul ul {
-      left: 100%;
-      top: 0;
-      background: #999;
-      display: none;
-    }
-  }
-  li.auth {
-    float: right;
-  }
-  li:hover > ul li {
-    min-width: 150px;
-  }
-  li:hover > ul li a {
-    width: 100%;
-  }
-  li:hover ul,li:hover > ul {
-      display: block;
-  }
-  li.active a {
-    text-decoration: none;
-    border-bottom: 1px solid orange;
-  }
+  width: 100%;
 }
-
+ul.mainmenu li {
+  float: left;
+  display: inline;
+  position: relative;
+  list-style: none;
+}
+ul.mainmenu li a {
+  padding: 18px 15px;
+  float: left;
+  display: block;
+  color: #ccc;
+  border-bottom: 1px solid transparent;
+}
+ul.mainmenu li a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid orange;
+}
+ul.mainmenu li ul {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: none #100d0d;
+  display: none;
+  padding: 0;
+}
+ul.mainmenu li ul li.active a,
+ul.mainmenu li li a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid orange;
+}
+ul.mainmenu li ul ul ul {
+  left: 100%;
+  top: 0;
+  background: #999;
+  display: none;
+}
+ul.mainmenu li.auth {
+  float: right;
+}
+ul.mainmenu li:hover > ul li {
+  min-width: 150px;
+}
+ul.mainmenu li:hover > ul li a {
+  width: 100%;
+}
+ul.mainmenu li:hover ul,
+ul.mainmenu li:hover > ul {
+  display: block;
+}
+ul.mainmenu li.active a {
+  text-decoration: none;
+  border-bottom: 1px solid orange;
+}
 body.home > nav > .container {
   padding: 0px;
 }
-
 .nav-brand {
   float: left;
   height: 50px;
@@ -140,15 +142,17 @@ div#header {
   display: none;
   margin: -25px 0 0 15px;
 }
-
 a.edit {
-  color:#fff;
+  color: #fff;
 }
-
-#edit-wan,#edit-lan,#edit-dns {
+#edit-wan,
+#edit-lan,
+#edit-dns {
   display: none;
 }
-#update-dnsmasq,#update-sites,#update-net {
+#update-dnsmasq,
+#update-sites,
+#update-net {
   position: absolute;
   right: 20px;
   top: 24px;
@@ -161,16 +165,18 @@ a.edit {
   font-size: 14px;
   line-height: 20px;
 }
-#update-dnsmasq.disabled,#update-sites.disabled {
+#update-dnsmasq.disabled,
+#update-sites.disabled {
   background: #dddddd;
-  border:1px solid #d6d6d6;
-  color:#909090;cursor: not-allowed;
+  border: 1px solid #d6d6d6;
+  color: #909090;
+  cursor: not-allowed;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
 .add-record div {
-  clear:both;
+  clear: both;
 }
 #add-record {
   height: 30px;
@@ -179,17 +185,16 @@ form.add-record {
   display: none;
   color: #000;
 }
-form.add-record  select {
+form.add-record select {
   height: 30px;
 }
-form.add-record > div  {
+form.add-record > div {
   position: relative;
   float: left;
   display: inline-block;
   margin-right: 10px;
   padding: 5px 0;
 }
-
 form#login > div {
   position: relative;
   clear: both;
@@ -197,27 +202,29 @@ form#login > div {
   display: inline-block;
   margin-right: 10px;
   padding: 5px 0;
-  color:#000;
+  color: #000;
 }
-
-form.add-record > div > label  {
+form.add-record > div > label {
   position: absolute;
   top: 0;
-  left: 0;transition: all .2s linear; color:#999; font-size:10px;
+  left: 0;
+  transition: all .2s linear;
+  color: #999;
+  font-size: 10px;
 }
 table input {
-  margin:0px 5px 0 0;
-  padding:0px;
-  height:20px;
-  color:#000;
+  margin: 0px 5px 0 0;
+  padding: 0px;
+  height: 20px;
+  color: #000;
 }
 form.add-record input {
-    margin: 0 0 0 0;
-    padding: 3px 10px;
-    // border: 1px solid #999;
-    color: #000;
+  margin: 0 0 0 0;
+  padding: 3px 10px;
+  color: #000;
 }
-#login input[type='text'],#login input[type='password'] {
+#login input[type='text'],
+#login input[type='password'] {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -237,9 +244,19 @@ form.add-record input {
   border: 1px solid #000000;
   font-weight: bold;
 }
-input:invalid + label { top:3px; opacity:0; }
-input:valid + label,input + label { opacity:1; top:0; display: none;}
-input:focus { outline:none; }
+input:invalid + label {
+  top: 3px;
+  opacity: 0;
+}
+input:valid + label,
+input + label {
+  opacity: 1;
+  top: 0;
+  display: none;
+}
+input:focus {
+  outline: none;
+}
 input:focus + label {
   top: 100%;
   margin-top: -16px;
@@ -266,11 +283,12 @@ div#overlay {
   width: 100%;
   height: 100%;
   z-index: 10;
-  background-color: rgba(0,0,0,0.5); /*dim the background*/
+  background-color: rgba(0, 0, 0, 0.5);
+  /*dim the background*/
   display: none;
-  .container {
-    height: 100%;
-  }
+}
+div#overlay .container {
+  height: 100%;
 }
 div#overlay .outer span {
   float: left;
@@ -278,49 +296,54 @@ div#overlay .outer span {
   line-height: 24px;
   color: #000;
 }
-div#overlay {
-  .outer {
-      position: relative;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      background: transparent;
-      top:0;
-      display: block;
-      margin: 0 auto;
-    .inner {
-      position: relative;
-      padding: 30px;
-      height: 500px;
-      width: 500px;
-      background: #f1f1f1;
-      top:35px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      display: block;
-      margin: 0 auto;
-
-    }
-  }
+div#overlay .outer {
+  position: relative;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  top: 0;
+  display: block;
+  margin: 0 auto;
 }
-body.settings table.tabler td:first-child {
-    // width: 235px;
+div#overlay .outer .inner {
+  position: relative;
+  padding: 30px;
+  height: 500px;
+  width: 500px;
+  background: #f1f1f1;
+  top: 35px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
 }
 h5 span.sub {
-  color:#fff;
+  color: #fff;
 }
 table.tabler {
   color: #ccc;
 }
-.table-hover tbody tr:hover>td, .table-hover tbody tr:hover>th {
+.table-hover tbody tr:hover > td,
+.table-hover tbody tr:hover > th {
   background-color: #3660a9;
 }
-.tabler>tbody>tr>td, .tabler>tbody>tr>th, .tabler>tfoot>tr>td, .tabler>tfoot>tr>th, .tabler>thead>tr>td, .tabler>thead>tr>th {
+.tabler > tbody > tr > td,
+.tabler > tbody > tr > th,
+.tabler > tfoot > tr > td,
+.tabler > tfoot > tr > th,
+.tabler > thead > tr > td,
+.tabler > thead > tr > th {
   border-top: 1px solid #29313e;
 }
-.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
-    padding: 7px 5px 1px 5px;
+.table-condensed > tbody > tr > td,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > td,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > thead > tr > th {
+  padding: 7px 5px 1px 5px;
 }
 table.tabler #field-value {
   width: 150px;
@@ -339,7 +362,7 @@ table.tabler #field-value {
   margin-top: 20px;
 }
 table.tabler td:first-child {
-  width:50px;
+  width: 50px;
 }
 table.tabler input#update-data {
   background: url('/img/edit.png') -28px -55px no-repeat;
@@ -363,7 +386,7 @@ table.tabler > tbody > tr > td span {
   display: block;
 }
 table.tabler input.delete {
-  margin:0;
+  margin: 0;
   background: url('/img/edit.png') -80px -55px no-repeat;
   cursor: pointer;
   width: 20px;
@@ -371,7 +394,7 @@ table.tabler input.delete {
   border: none;
 }
 table.tabler input.delete-hover {
-  margin:0;
+  margin: 0;
   background: url('/img/edit.png') -62px -55px no-repeat;
   cursor: pointer;
   width: 20px;
@@ -388,7 +411,7 @@ table.tabler input.delete-hover {
   display: block;
   margin: 0 10px 0 0;
   padding: 5px 10px;
-  border:1px solid none;
+  border: 1px solid none;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -411,14 +434,14 @@ a.pager:hover {
   background-color: #a94442;
 }
 .alert {
-  display:none;
-  float:left;
+  display: none;
+  float: left;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
   margin: 20px 0px 15px;
   padding: 10px;
-  width:100%;
+  width: 100%;
 }
 .alert p {
   margin: 0px;
@@ -433,8 +456,6 @@ a.pager:hover {
   color: #6d6d6d;
   border: 1px solid #bac6ce;
 }
-
-
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -453,40 +474,44 @@ body {
   height: 60px;
   background-color: #f5f5f5;
 }
-
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
-
 body > .container {
   padding: 0 15px 0;
 }
 .container .text-muted {
   margin: 20px 0;
 }
-
 .footer > .container {
   padding-right: 15px;
   padding-left: 15px;
 }
-
 code {
   font-size: 80%;
 }
-
-#net-wan,#net-lan,#net-wan-tx,#net-lan-tx {
+#net-wan,
+#net-lan,
+#net-wan-tx,
+#net-lan-tx {
   background-color: #000;
   padding: 1px;
   float: left;
   display: block;
-  width:100%;
+  width: 100%;
 }
-#net-wan .meter-outer,#net-lan .meter-outer,#net-wan-tx .meter-outer,#net-lan-tx .meter-outer {
+#net-wan .meter-outer,
+#net-lan .meter-outer,
+#net-wan-tx .meter-outer,
+#net-lan-tx .meter-outer {
   width: 90%;
   display: block;
   float: left;
 }
-#net-wan .label,#net-lan .label,#net-wan-tx .label,#net-lan-tx .label {
+#net-wan .label,
+#net-lan .label,
+#net-wan-tx .label,
+#net-lan-tx .label {
   background-color: #28b54b;
   color: #000;
   float: left;
@@ -496,7 +521,10 @@ code {
   -moz-border-radius: 0px;
   width: 55px;
 }
-#net-wan .meter,#net-lan .meter,#net-wan-tx .meter,#net-lan-tx .meter {
+#net-wan .meter,
+#net-lan .meter,
+#net-wan-tx .meter,
+#net-lan-tx .meter {
   float: left;
   display: block;
   min-width: 5px;
@@ -520,25 +548,20 @@ td.legendLabel {
 #memory .legend td {
   color: #ccc;
 }
-
-.setup-wizard {
-  form {
-    button, input, select, textarea {
-      color: #000;
-    }
-  }
+.setup-wizard form button,
+.setup-wizard form input,
+.setup-wizard form select,
+.setup-wizard form textarea {
+  color: #000;
 }
-dl {
-  dt {
-    float: left;
-    clear: left;
-  }
-  dd {
-    float: left;
-    clear: right;
-  }
-  dt.labeler {
-    min-width: 150px;
-  }
-
+dl dt {
+  float: left;
+  clear: left;
+}
+dl dd {
+  float: left;
+  clear: right;
+}
+dl dt.labeler {
+  min-width: 150px;
 }
