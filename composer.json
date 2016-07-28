@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "version": "0.0.1",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "betasyntax/framework":"1.0.0"
     },
