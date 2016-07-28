@@ -18,11 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-          "App\\": "app/"
+          "App\\":"app/"
         }
     },
-    "extra":{
-    "installer-paths":{
-      "./": ["monolog/monolog"]
+    "extra": {
+        "installer-paths":{
+          "./":["monolog/monolog"]
+        }
     }
 }
