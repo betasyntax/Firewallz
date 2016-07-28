@@ -10,7 +10,6 @@
         "php": ">=5.5.9",
         "ext-mbstring":"*",
         "ext-openssl":"*",
-        "mnsami/composer-custom-directory-installer": "1.1.*",
         "betasyntax/framework":"0.0.1"
     },
     "require-dev": {
@@ -21,9 +20,10 @@
           "App\\":"app/"
         }
     },
-    "extra": {
-        "installer-paths":{
-          "./":["monolog/monolog"]
-        }
+    "scripts": {
+        "post-install-cmd": [
+            "mv -Rf ./vendor/betasyntax/betasyntax/* ./",
+            "rm -Rf ./vendor/betasyntax/betasyntax"
+        ]
     }
 }
