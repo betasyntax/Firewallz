@@ -9,7 +9,7 @@
     "require": {
     },
     "require-dev": {
-        "betasyntax/framework":"@dev"
+        "betasyntax/framework":"0.0.1",
         "phpunit/phpunit":"5.4.*"
     },
     "autoload": {
