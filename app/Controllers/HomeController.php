@@ -7,7 +7,7 @@ use Betasyntax\BaseController;
 class HomeController extends Controller
 {
 
-  public $domain = 'admin';
+  public $domain = 'web';
 
   /**
    * [$close_session if you have a lot of AJAX request on your page you might want to set this to true. If true you can't save session variables in this controller]

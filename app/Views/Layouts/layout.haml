@@ -24,7 +24,10 @@
             %span.icon-bar
         #navbar.collapse.navbar-collapse
           / helper function wayfinder
-          - include 'Helpers/mainmenu.haml'
+          / - include 'Helpers/mainmenu.haml'
+          %ul.mainmenu
+            %li
+              %a{:href=>"/"} Home
     .container
       !=flash()
       - block body
