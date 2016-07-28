@@ -6,7 +6,7 @@
     "type": "project",
     "version": "0.0.1",
     "require": {
-        "betasyntax/betasyntax": "0.0.1"
+        "betasyntax/framework": "0.0.1"
     },
     "require-dev": {        
         "phpunit/phpunit": "5.4.*"
