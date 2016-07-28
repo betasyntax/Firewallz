@@ -1,6 +1,6 @@
 <?php
-use Lib\Wayfinder;
-use Lib\Registry;
+use Betasyntax\Wayfinder;
+use Betasyntax\Registry;
 use App\Models\Setting;
 
 $wayfinder = new Twig_SimpleFunction('Wayfinder', function ($slug) {
