@@ -5,11 +5,10 @@
     "license": "MIT",
     "type": "project",
     "version": "0.0.1",
-    "minimum-stability": "dev",
     "require": {
-        "betasyntax/framework":"@dev"
     },
     "require-dev": {
+        "betasyntax/framework":"@dev"
         "phpunit/phpunit":"5.4.*"
     },
     "autoload": {
