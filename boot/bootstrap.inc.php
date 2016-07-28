@@ -1,14 +1,14 @@
 <?php
 // namespace Lib;
-use Lib\Wayfinder;
-use Lib\Registry;
-use Lib\Router;
-use Lib\Config;
-use Lib\Response;
-use Lib\Session;
-use Lib\Authentication;
-use Lib\Functions;
-use Lib\MetaTrait;
+use Betasyntax\Wayfinder;
+use Betasyntax\Registry;
+use Betasyntax\Router;
+use Betasyntax\Config;
+use Betasyntax\Response;
+use Betasyntax\Session;
+use Betasyntax\Authentication;
+use Betasyntax\Functions;
+use Betasyntax\MetaTrait;
 
 function app(){
   global $registry;

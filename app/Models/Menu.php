@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Lib\Model;
+use Betasyntax\Model;
 
 Class Menu extends Model {
   // public function test($id) {
