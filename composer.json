@@ -23,7 +23,8 @@
     "scripts": {
         "post-install-cmd": [
             "mv -Rf ./vendor/betasyntax/betasyntax/* ./",
-            "rm -Rf ./vendor/betasyntax/betasyntax"
+            "rm -Rf ./vendor/betasyntax/betasyntax",
+            "composer update"
         ]
     }
 }
