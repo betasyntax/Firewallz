@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    %title
+      Welcome &vert;
+      - block title 
+      - endblock
+    %meta{:charset=>"utf-8"}
+    %meta{'http-equiv'=>"X-UA-Compatible",:content=>"IE=edge"}
+    %meta{:name=>"viewport", :content=>"width=device-width, initial-scale=1"}
+    %link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/bootstrap.min.css"}
+    %link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/main.css"}
+    - block head
+    - endblock
+  %body{:class=>"#{slug}"}
+    %nav.navbar.navbar-inverse.navbar-fixed-top
+      .container
+        .navbar-header
+          %button.navbar-toggle.collapsed{:type=>'button','data-toggle'=>'collapse','data-target'=>'#navbar','aria-expanded'=>'false','aria-controls'=>"navbar"}
+            %span.sr-only
+              Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+        #navbar.collapse.navbar-collapse
+          / helper function wayfinder
+          - include 'Helpers/mainmenu.haml'
+    .container
+      !=flash()
+      - block body
+      - endblock
+    %footer.footer
+      .container
+        %p.text-muted
+          Place sticky footer content here.
+    %script{:src=>"/js/jquery.min.js"}
+    %script{:src=>"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",:integrity=>"sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",:crossorigin=>"anonymous"}
+    %script{:src=>"/js/main.js"}
+    - block jsFooter
+    - endblock
