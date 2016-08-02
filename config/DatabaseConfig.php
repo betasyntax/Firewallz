@@ -1,6 +1,6 @@
 <?php
 // File: ./Db/Config.php
-namespace Config;
+namespace Config\DatabaseConfig;
 /**
  * Usage
  */

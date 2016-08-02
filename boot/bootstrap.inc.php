@@ -9,6 +9,7 @@ use Betasyntax\Session;
 use Betasyntax\Authentication;
 use Betasyntax\Functions;
 use Betasyntax\MetaTrait;
+use Plasticbrain\FlashMessages\FlashMessages;
 
 function app(){
   global $registry;
@@ -17,7 +18,7 @@ function app(){
 
 $registry = new Registry();
 $route = new Router();
-$config = new Config();
+$dbconfig = new DatabaseConfig();
 
 $haml = new MtHaml\Environment('twig');
 
@@ -29,7 +30,7 @@ app()->twig->addExtension(new MtHaml\Support\Twig\Extension());
 
 
 app()->session = Session::getInstance();
-app()->flash = new Plasticbrain\FlashMessages\FlashMessages();
+app()->flash = new FlashMessages();
 app()->util = new Functions();
 app()->auth = new Authentication();
 app()->response = new Response();
