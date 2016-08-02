@@ -1,5 +1,2 @@
 <?php
-
-
-
-$app = new Betasyntax\Application\Application(__DIR__.'/../');
+$app = new Betasyntax\Core\Application(__DIR__.'/../');
