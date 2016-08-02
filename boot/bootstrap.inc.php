@@ -18,7 +18,7 @@ function app(){
 
 $registry = new Registry();
 $route = new Router();
-$dbconfig = new DatabaseConfig();
+$dbconfig = new Config();
 
 $haml = new MtHaml\Environment('twig');
 
