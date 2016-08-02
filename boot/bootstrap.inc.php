@@ -10,6 +10,9 @@ use Betasyntax\Authentication;
 use Betasyntax\Functions;
 use Betasyntax\MetaTrait;
 use Plasticbrain\FlashMessages\FlashMessages;
+use MtHaml\Environment as HamlEnv;
+use MtHaml\Support\Twig\Loader as HamlLoader;
+use MtHaml\Support\Twig\Extension as HamlExt;
 
 function app(){
   global $registry;
@@ -20,14 +23,12 @@ $registry = new Registry();
 $route = new Router();
 $dbconfig = new Config();
 
-$haml = new MtHaml\Environment('twig');
-
+$haml = new HamlEnv('twig');
 $twig = new Twig_Loader_Filesystem(array(APP_ROOT.'app/Views/'));
-$hamll = new MtHaml\Support\Twig\Loader($haml, $twig);
+$hamll = new HamlLoader($haml, $twig);
 
 app()->twig = new Twig_Environment($hamll);
-app()->twig->addExtension(new MtHaml\Support\Twig\Extension());
-
+app()->twig->addExtension(new HamlExt());
 
 app()->session = Session::getInstance();
 app()->flash = new FlashMessages();
