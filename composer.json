@@ -16,8 +16,7 @@
         "php": ">=5.5.9",
         "ext-mbstring":"*",
         "ext-openssl":"*",
-        "betasyntax/framework":"dev-master",
-        "league/container":"2.2.0"
+        "betasyntax/framework":"dev-master"
     },
     "require-dev": {
         "phpunit/phpunit":"5.4.*"
