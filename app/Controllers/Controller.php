@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Controllers;
+<?php namespace App\Controllers;
 
 use Betasyntax\BaseController;
 use Betasyntax\Authentication;

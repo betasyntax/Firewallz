@@ -1,22 +1,35 @@
-<?php
-
-namespace App\Controllers\Auth;
+<?php namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
 use App\Models\User;
+use Betasyntax\Core\Application;
 use PHPMailer;
 
 class AuthController extends Controller
 {
   protected $token = '';
   protected static $activation_code;
+  public $app;
+  protected $authUrl = '/authenticate';
+  protected $resetPassUrl = '/account/password/reset';
+  protected $loginUrl  = '/login';
+  protected $signupUrl = '/signup';
+  protected $signupSuccessUrl = '/account/created';
+  protected $resetPassViewUrl = '/account/password/reset/view';
+
+  public function __construct() 
+  {
+    $this->app = app();
+    // var_dump($this->app->config);
+  }
 
   public function csrf_token() 
   {
     if (empty($this->session->token)) {
-      app()->session->token = bin2hex(random_bytes(32));
+      $this->app->session->token = bin2hex(random_bytes(32));
     }
-    $this->token = $this->session->token;
+
+    $this->token = $this->app->session->token;
   }
 
   public function login()
@@ -25,8 +38,8 @@ class AuthController extends Controller
     $c = array(
       'slug'=>'login',
       'token'=>$this->token,
-      'action' =>app()->authUrl,
-      'resetPassUrl'=>app()->resetPassUrl
+      'action' =>$this->authUrl,
+      'resetPassUrl'=>$this->resetPassUrl
     );
     return view('Auth/login.haml',$c);
   }
@@ -45,7 +58,7 @@ class AuthController extends Controller
       'slug'=>'login',
       'token'=>$this->token,
       'email'=>isset($_GET['email']) ? $_GET['email'] : '',
-      'action' => app()->signupUrl
+      'action' => $this->signupUrl
     );
     return view('Auth/signup.haml',$c);
   }
@@ -187,7 +200,7 @@ class AuthController extends Controller
                 'slug'=>'login',
                 'token'=>$this->token,
                 'email'=>isset($_GET['email']) ? $_GET['email'] : '',
-                'action' => app()->signupUrl
+                'action' => $this->signupUrl
               );
               return view('Auth/password_reset_email.haml', $c);
             }
@@ -224,7 +237,7 @@ class AuthController extends Controller
               if(strlen($pass)>=5) {
                 if(User::createUser($req)) {
                   if($this->email_activation_code($req)) {
-                    return redirect(app()->signupSuccessUrl);
+                    return redirect($this->signupSuccessUrl);
                   }
                 } else {
                   $error_text .= 'The there was an error creating your account.';
@@ -250,8 +263,8 @@ class AuthController extends Controller
       $error_text .= 'All fields are required.';
     }
     if($error_text!='') {
-      $this->flash->error($error_text);
-      return redirect(app()->signupUrl.'?email='.$new_user);
+      flash()->error($error_text);
+      return redirect($this->signupUrl.'?email='.$new_user);
     }
   }
 
@@ -261,7 +274,7 @@ class AuthController extends Controller
     $c = array(
       'slug'=>'reset-password',
       'token'=>$this->token,
-      'action' =>app()->resetPassViewUrl
+      'action' =>$this->resetPassViewUrl
     );
     return view('Auth/reset_password.haml',$c);
   }
@@ -272,8 +285,9 @@ class AuthController extends Controller
     $user = $req['email'];
     $pass = $req['password'];
     $token = $req['csrf_token'];
+    var_dump($this->app->session->token);
     if(!empty($req['email'])&&!empty($req['password'])) {
-      if (hash_equals($token, $this->session->token)) {
+      if (hash_equals($token, $this->app->session->token)) {
         if(app()->auth->authenticate($req)) {
           $this->session->isLoggedIn = 1;
           $this->flash->success('Logged in successfully');
@@ -287,8 +301,8 @@ class AuthController extends Controller
         return redirect(app()->loginUrl);
       }    
     } else {
-      $this->flash->error('You must provide appropiate credentials.');
-      return redirect(app()->loginUrl);
+      flash()->error('You must provide appropiate credentials.');
+      return redirect($this->loginUrl);
     }     
   } 
 }

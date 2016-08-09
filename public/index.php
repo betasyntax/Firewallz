@@ -2,17 +2,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// require dirname(__FILE__) . '/../boot/app.new.php';
-// 
-
 require __DIR__.'/../vendor/autoload.php';
-echo "<pre>";
+
 $app = require_once realpath(__DIR__.'/../boot/app.new.php');
-// $app->make();
 
-// var_dump($app);
+// $router = $app->container->get('Betasyntax\Router');
 
-// $test = $app->get('view');
+// require $app->getBasePath().'/app/routes.php';
 
-// var_dump($test);
-echo "</pre>";
+// $router->dispatch();

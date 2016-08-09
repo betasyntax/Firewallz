@@ -1,15 +1,30 @@
 <?php
 // map homepage
-$route->map( 'GET', '/','index@HomeController');
+// 
+// 
 
-$route->map( 'POST', '/account/password/reset','passwordResetFinal@Auth\AuthController');
-$route->map( 'POST', '/account/password/reset/view','resetPassword@Auth\AuthController');
-$route->map( 'POST', '/authenticate','authenticate@Auth\AuthController');
-$route->map( 'POST', '/signup','createUser@Auth\AuthController');
-$route->map( 'GET', '/signup','signup@Auth\AuthController');
-$route->map( 'GET', '/account/created','accountCreated@Auth\AuthController');
-$route->map( 'GET', '/account/activate/[*:token]','accountActivate@Auth\AuthController');
-$route->map( 'GET', '/account/password/reset','getResetPassword@Auth\AuthController');
-$route->map( 'GET', '/account/password/reset/[*:token]','passwordReset@Auth\AuthController');
-$route->map( 'GET', '/login','login@Auth\AuthController');
-$route->map( 'GET', '/logout','logout@Auth\AuthController');
+use Betasyntax\Core\Application;
+
+$app = new Betasyntax\Core\Application;
+$app = $app::getInstance();
+
+
+
+$router = $app->container->get('Betasyntax\Router');
+
+
+$router->map( 'GET', '/','index@HomeControllers');
+
+$router->map( 'POST', '/account/password/reset','passwordResetFinal@Auth\AuthController');
+$router->map( 'POST', '/account/password/reset/view','resetPassword@Auth\AuthController');
+$router->map( 'POST', '/authenticate','authenticate@Auth\AuthController');
+$router->map( 'POST', '/signup','createUser@Auth\AuthController');
+$router->map( 'GET', '/signup','signup@Auth\AuthController');
+$router->map( 'GET', '/account/created','accountCreated@Auth\AuthController');
+$router->map( 'GET', '/account/activate/[*:token]','accountActivate@Auth\AuthController');
+$router->map( 'GET', '/account/password/reset','getResetPassword@Auth\AuthController');
+$router->map( 'GET', '/account/password/reset/[*:token]','passwordReset@Auth\AuthController');
+$router->map( 'GET', '/login','login@Auth\AuthController');
+$router->map( 'GET', '/logout','logout@Auth\AuthController');
+
+$router->dispatch();
