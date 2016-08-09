@@ -75,7 +75,7 @@ class AuthController extends Controller
     $c = array(
       'slug'=>'activated'
     );
-    var_dump($token['token']);
+    // var_dump($token['token']);
     $user = User::search('activation_code','=',$token['token'],1);
     if(isset($user->activation_code)) {
       $user->activation_code='';
@@ -285,20 +285,20 @@ class AuthController extends Controller
     $user = $req['email'];
     $pass = $req['password'];
     $token = $req['csrf_token'];
-    var_dump($this->app->session->token);
+    // var_dump($this->app->session->token);
     if(!empty($req['email'])&&!empty($req['password'])) {
       if (hash_equals($token, $this->app->session->token)) {
         if(app()->auth->authenticate($req)) {
           $this->session->isLoggedIn = 1;
-          $this->flash->success('Logged in successfully');
+          flash()->success('Logged in successfully');
           return redirect('/');
         } else {
-          $this->flash->error('No account exists with those credentials or your account hasn\'t been activated yet.');
-          return redirect(app()->loginUrl);
+          flash()->error('No account exists with those credentials or your account hasn\'t been activated yet.');
+          return redirect($this->loginUrl);
         }
       } else {
-        $this->flash->error('You must login from this form please try again.');
-        return redirect(app()->loginUrl);
+        flash()->error('You must login from this form please try again.');
+        return redirect($this->loginUrl);
       }    
     } else {
       flash()->error('You must provide appropiate credentials.');

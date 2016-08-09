@@ -3,7 +3,6 @@ use Betasyntax\Wayfinder;
 use Betasyntax\Registry;
 // use App\Models\Setting;
 // 
-var_dump($app);
 
 $view = $app->container->get("Betasyntax\View\View");
 // $app = \Betasyntax\Core\Application::getInstance();
@@ -38,6 +37,4 @@ $dd = new \Twig_SimpleFunction('dd', function ($data) {
 var_dump("<pre>");
 var_dump($app);
 $view->twig->addFunction($wayfinder);
-// app()->twig->addFunction($brandingStatus);
 $view->twig->addFunction($flash);
-// $view->twig->addFunction($dd);
