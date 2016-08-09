@@ -1,6 +1,8 @@
 <?php  
 return [
-  ['GET',  '/',                                 'index@HomeControllers'],
+  ['GET',  '/',                                 'index@HomeController'],
+  ['GET',  '/welcome',                                 'welcome@HomeController'],
+  
   ['POST', '/account/password/reset',           'passwordResetFinal@Auth\AuthController'],
   ['POST', '/account/password/reset/view',      'resetPassword@Auth\AuthController'],
   ['POST', '/authenticate',                     'authenticate@Auth\AuthController'],

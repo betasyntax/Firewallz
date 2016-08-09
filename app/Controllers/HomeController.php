@@ -22,8 +22,20 @@ class HomeController extends Controller
   public function index()
   {
     $c = array(
-      'var_one'=> ['Hello','World']
+      'slug'=> 'home'
     );
     return view('home.haml',$c);
+  }
+  /**
+   * [index returns the welcome page]
+   * @return [string] [returns twig template]
+   */
+  public function welcome()
+  {
+    $c = array(
+      'var_one'=> ['Hello','World'],
+      'slug'=> 'welcome'
+    );
+    return view('welcome.haml',$c);
   }
 }
