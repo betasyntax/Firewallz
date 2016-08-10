@@ -15,7 +15,7 @@
         "php": ">=5.5.9",
         "ext-mbstring":"*",
         "ext-openssl":"*",
-        "betasyntax/framework":"0.0.1"
+        "betasyntax/framework":"dev-masater as 0.0.1"
     },
     "require-dev": {
         "phpunit/phpunit":"5.4.*",
