@@ -1,19 +1,13 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class TestCase extends PHPUnit\Framework\TestCase
+class ApplicationTest extends TestCase
 {
   /**
-   * Creates the application.
-   *
-   * @return \Illuminate\Foundation\Application
+   * @runInSeparateProcess
    */
-  public function createApplication()
+  public function testCase()
   {
-    $app = require __DIR__.'/../boot/app.php';
-
-    $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
-
-    return $app;
   }
 
 } 
