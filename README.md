@@ -12,6 +12,7 @@ The Betasyntax Framework is an easy to use framework based on PHP. It implements
 * Full support for database migrations and seeding thanks to [Phinx](https://github.com/robmorgan/phinx)
 * Utilizes [Twig](http://twig.sensiolabs.org/), [Haml](http://haml.info/) and [Less](http://lesscss.org/) for easy front end development
 * Uses [League Container](https://github.com/thephpleague/container) for super simple IoC Container Dependency Injection for the framework.
+* Basic middleware support
 * Built in Authentication system for quick setups soon to be fully modular
 * The Betasyntax Web Framework tries to implement the best features of popular frameworks like Rails and Laravel.
 
