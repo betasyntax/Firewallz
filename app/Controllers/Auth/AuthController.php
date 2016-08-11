@@ -16,11 +16,12 @@ class AuthController extends Controller
   protected $signupUrl = '/signup';
   protected $signupSuccessUrl = '/account/created';
   protected $resetPassViewUrl = '/account/password/reset/view';
+  protected $auth;
 
   public function __construct() 
   {
-    $this->app = app();
-    // var_dump($this->app->config);
+    $this->app = app()->getInstance();
+    $this->app->auth = $this->app->container->get('Betasyntax\Authentication');
   }
 
   public function csrf_token() 
@@ -288,7 +289,7 @@ class AuthController extends Controller
     // var_dump($this->app->session->token);
     if(!empty($req['email'])&&!empty($req['password'])) {
       if (hash_equals($token, $this->app->session->token)) {
-        if(app()->auth->authenticate($req)) {
+        if($this->app->auth->authenticate($req)) {
           $this->session->isLoggedIn = 1;
           flash()->success('Logged in successfully');
           return redirect('/');

@@ -5,18 +5,12 @@
     "license": "MIT",
     "type": "project",
     "version": "0.0.1",
-    "minimum-stablilty":"dev",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/betasyntax/framework"
-        }
-    ],
+    "minimum-stability":"dev",
     "require": {
         "php": ">=5.5.9",
         "ext-mbstring":"*",
         "ext-openssl":"*",
-        "betasyntax/framework":"dev-master"
+        "betasyntax/framework":"@dev"
     },
     "require-dev": {
         "phpunit/phpunit":"5.4.*",
