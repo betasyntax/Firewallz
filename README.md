@@ -10,25 +10,34 @@ The Betasyntax Framework is an easy to use framework based on PHP. It implements
 
 * Custom Database Abstraction Layer (Currently only MySQL is supported, more to come MSSql,SqlLite and Postgres to start)
 * Full support for database migrations and seeding thanks to [Phinx](https://github.com/robmorgan/phinx)
-* Utilizes [Twig](http://twig.sensiolabs.org/), [Haml](http://haml.info/) and [Less](http://lesscss.org/) for easy front end development
-* Uses [League Container](https://github.com/thephpleague/container) for super simple IoC Container Dependency Injection for the framework.
-* Built in Authentication system for quick setups soon to be fully modular
-* The Betasyntax Web Framework tries to implement the best features of popular frameworks like Rails and Laravel.
+* Utilizes [Twig](http://twig.sensiolabs.org/), [Haml](http://haml.info/) and [Less](http://lesscss.org/) for easy front end development. Don't like twig or haml? You can implement your own!.
+* Uses [League Container](https://github.com/thephpleague/container) for super simple IoC Container Dependency Injection for the entire framework.
+* Use Service Providers to manage what components are loaded and what gets injected into your app. 
+* Modular Authentication system for quick setups. Don't want to use the built in auth system, you can build your own and inject it into your app.
+* Easyily create menus from a database table with a simple command called WayFinder. Allows for active css tags to be applied to active menu items.  
 
 ## Installation:
-
+```bash
 cd /web/server/root
-
+```
 #### For now do run the create-project command to get this bad boy running.
+```bash
 git clone https://github.com/betasyntax/betasyntax.git ./
-
-#### You can use migrations to quickly seed your dev box.
+composer install
 vendor/bin/phinx migrate -e development
+```
+#### You can use migrations to quickly seed your dev box.
+```bash
+vendor/bin/phinx migrate -e development
+```
 #### Seed your db.
+```bash
 vendor/bin/phinx seed:run -e development
+```
 #### Easily rollback a migration.
+```bash
 vendor/bin/phinx rollback
-
+```
 ## Basic Usage:
 ###Routes (/app/routes.php)
 ```php
@@ -169,7 +178,43 @@ $wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
 $view->twig->addFunction($wayfinder);
 ```
 More to come!
+### Service Providers
+If you want to use one of the many php packages out there simply composer.json file and then edit the conf/app.php file. The package will be automatically injected into your application.
 
+/conf/app.php
+```php
+<?php
+return [
+  'providers' => [
+    // default classes
+    'functions'=>'Betasyntax\Functions',
+    // dont like haml change ViewHaml to View
+    'view'=>'Betasyntax\View\ViewHaml',
+    'auth'=>'Betasyntax\Authentication',
+    'request'=>'GuzzleHttp\Psr7\Request',
+    'response'=>'GuzzleHttp\Psr7\Response',
+    'router'=>'Betasyntax\Router',
+    'config'=>'Betasyntax\Config',
+    // add this
+    'myCoolApp'=>'MyCoolApp\CoolApp'
+  ],
+];
+```
+This is useful if you want to create your own twig extensions and integrate them into your app. You need to do something like this:
+/app/helper.php
+```php
+<?php 
+use Betasyntax\Wayfinder;
+
+$view = $app->container->get($app->getViewObjectStr());
+
+$wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
+  Wayfinder::_setSlug($slug);
+  $data = Wayfinder::tree(0);
+});
+// now you can use wayfinder any where in your views.
+$view->twig->addFunction($wayfinder);
+```
 ## License
 
 The Betasyntax framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
