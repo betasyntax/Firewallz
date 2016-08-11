@@ -23,10 +23,11 @@ cd /web/server/root
 #### For now do run the the git clone command to get this bad boy running.
 ```bash
 composer create-project betasyntax/betasyntax ./
-
 # or to get the development version
 git clone https://github.com/betasyntax/betasyntax.git ./
 composer install
+# create a database, edit /conf/config.php to your liking
+# run this migration to get your dynamic menus working
 vendor/bin/phinx migrate -e development
 ```
 #### You can use migrations to quickly seed your dev box.
