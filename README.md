@@ -19,22 +19,18 @@ The Betasyntax Framework is an easy to use framework based on PHP. It implements
 ## Installation:
 ```bash
 cd /web/server/root
-```
-#### For now do run the the git clone command to get this bad boy running.
-```bash
 composer create-project betasyntax/betasyntax ./
-# or to get the development version
+```
+Or  you can install the development version:
+```bash
 git clone https://github.com/betasyntax/betasyntax.git ./
 composer install
-# create a database, edit /conf/config.php to your liking
-# run this migration to get your dynamic menus working
-vendor/bin/phinx migrate -e development
 ```
-#### You can use migrations to quickly seed your dev box.
+Next reate a database, edit /conf/config.php to your liking and run the migration to get your dynamic menus working.
 ```bash
 vendor/bin/phinx migrate -e development
 ```
-#### Seed your db.
+#### You can use migrations to quickly seed your database.
 ```bash
 vendor/bin/phinx seed:run -e development
 ```
