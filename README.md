@@ -177,7 +177,6 @@ $wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
 
 $view->twig->addFunction($wayfinder);
 ```
-More to come!
 ### Service Providers
 If you want to use one of the many php packages out there simply composer.json file and then edit the conf/app.php file. The package will be automatically injected into your application.
 
