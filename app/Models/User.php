@@ -26,13 +26,4 @@ Class User extends Model {
       return false;
     }
   }
-  public function test()
-  {
-    echo 'test';
-  }
-  
-  public static function tester()
-  {
-    return self::find(45,'has_one',self::has_one());
-  }
 }

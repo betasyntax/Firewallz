@@ -26,6 +26,7 @@ class HomeController extends Controller
     );
     return view('home.haml',$c);
   }
+  
   /**
    * [index returns the welcome page]
    * @return [string] [returns twig template]

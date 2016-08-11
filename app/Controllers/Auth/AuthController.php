@@ -7,9 +7,9 @@ use PHPMailer;
 
 class AuthController extends Controller
 {
+  public $app;
   protected $token = '';
   protected static $activation_code;
-  public $app;
   protected $authUrl = '/authenticate';
   protected $resetPassUrl = '/account/password/reset';
   protected $loginUrl  = '/login';
@@ -286,7 +286,6 @@ class AuthController extends Controller
     $user = $req['email'];
     $pass = $req['password'];
     $token = $req['csrf_token'];
-    // var_dump($this->app->session->token);
     if(!empty($req['email'])&&!empty($req['password'])) {
       if (hash_equals($token, $this->app->session->token)) {
         if($this->app->auth->authenticate($req)) {
