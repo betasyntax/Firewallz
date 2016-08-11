@@ -20,7 +20,7 @@ The Betasyntax Framework is an easy to use framework based on PHP. It implements
 cd /web/server/root
 
 #### For now do run the create-project command to get this bad boy running.
-composer create-project betasyntax/betasyntax ./
+git clone https://github.com/betasyntax/betasyntax.git ./
 
 #### You can use migrations to quickly seed your dev box.
 vendor/bin/phinx migrate -e development
