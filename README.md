@@ -22,6 +22,9 @@ cd /web/server/root
 ```
 #### For now do run the the git clone command to get this bad boy running.
 ```bash
+composer create-project betasyntax/betasyntax ./
+
+# or to get the development version
 git clone https://github.com/betasyntax/betasyntax.git ./
 composer install
 vendor/bin/phinx migrate -e development
