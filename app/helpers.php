@@ -1,7 +1,7 @@
 <?php 
 use Betasyntax\Wayfinder;
 
-$view = $app->container->get("Betasyntax\View\View");
+$view = $app->container->get($app->getViewObjectStr());
 
 //define your views
 
