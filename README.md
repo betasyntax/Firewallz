@@ -20,7 +20,7 @@ The Betasyntax Framework is an easy to use framework based on PHP. It implements
 ```bash
 cd /web/server/root
 ```
-#### For now do run the create-project command to get this bad boy running.
+#### For now do run the the git clone command to get this bad boy running.
 ```bash
 git clone https://github.com/betasyntax/betasyntax.git ./
 composer install
