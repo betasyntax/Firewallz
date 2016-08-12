@@ -1,8 +1,6 @@
-<?php
+<?php namespace App\Controllers;
 
-namespace App\Controllers;
-
-use Betasyntax\BaseController;
+use App\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -14,6 +12,11 @@ class HomeController extends Controller
    * @var boolean
    */
   protected $close_session = true;
+
+  public function __construct()
+  {
+    $this->middleware = ['auth'];
+  }
 
   /**
    * [index returns the homepage]

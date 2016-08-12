@@ -192,7 +192,7 @@ return [
     'auth'=>'Betasyntax\Authentication',
     'request'=>'GuzzleHttp\Psr7\Request',
     'response'=>'GuzzleHttp\Psr7\Response',
-    'router'=>'Betasyntax\Router',
+    'router'=>'Betasyntax\Router\Router',
     'config'=>'Betasyntax\Config',
     // add this
     'myCoolApp'=>'MyCoolApp\CoolApp'

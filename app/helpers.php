@@ -19,6 +19,7 @@ $brandingStatus = new Twig_SimpleFunction('brandingStatus', function () {
 });
 
 $flash = new \Twig_SimpleFunction('flash', function () {
+  error_log("test");
   echo $app->flash->display(null,false);
 });
 
