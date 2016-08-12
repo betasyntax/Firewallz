@@ -27,11 +27,6 @@
             "mv -Rf ./vendor/betasyntax/betasyntax/* ./",
             "rm -Rf ./vendor/betasyntax/betasyntax",
             "composer update"
-        ],
-        "post-update-cmd": [
-            "mv -Rf ./vendor/betasyntax/betasyntax/* ./",
-            "rm -Rf ./vendor/betasyntax/betasyntax",
-            "composer update"
         ]
     }
 }
