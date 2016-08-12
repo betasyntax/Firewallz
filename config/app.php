@@ -7,10 +7,11 @@ return [
     'request'=>'GuzzleHttp\Psr7\Request',
     'response'=>'GuzzleHttp\Psr7\Response',
     'router'=>'Betasyntax\Router\Router',
+    'middleware'=>'Betasyntax\Router\MiddlewareService',
     'config'=>'Betasyntax\Config'
   ],
   'middleware' => [
-    'logger' => ['Betasyntax\Logger\Logger','App\Middleware\Logger'],
+    'logger' => 'Betasyntax\Logger\Logger',
     'auth'=>'Betasyntax\Authentication',
   ]
 ];
