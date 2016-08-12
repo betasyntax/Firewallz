@@ -9,4 +9,8 @@ return [
     'router'=>'Betasyntax\Router\Router',
     'config'=>'Betasyntax\Config'
   ],
+  'middleware' => [
+    'logger' => ['Betasyntax\Logger\Logger','App\Middleware\Logger'],
+    'auth'=>'Betasyntax\Authentication',
+  ]
 ];
