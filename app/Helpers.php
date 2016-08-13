@@ -4,10 +4,11 @@
 
 class Helpers
 {
-  public function __construct()
+  protected $debugbarRender;
+  public static function getHelpers()
   {
     $wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
-      Wayfinder::_setSlug($slug);
+      \Betasyntax\Wayfinder::_setSlug($slug);
       $data = \Betasyntax\Wayfinder::tree(0);
     });
 
@@ -19,9 +20,14 @@ class Helpers
       return $s;
     });
 
-    $debug = new \Twig_SimpleFunction('debugger', function () {
+    $debugBarHead = new \Twig_SimpleFunction('debugBarHead', function () {
       $debugbar = new \DebugBar\StandardDebugBar();  
-      return $debugbar->getJavascriptRenderer();
+      $this->debugbarRender = $debugbar->getJavascriptRenderer();
+      echo $this->debugbarRender->renderHead();
+    });
+
+    $debugBarBody = new \Twig_SimpleFunction('debugBarBody', function () {
+      echo $this->debugbarRender->render();
     });
 
     $flash = new \Twig_SimpleFunction('flash', function () {
@@ -32,16 +38,11 @@ class Helpers
     $dd = new \Twig_SimpleFunction('dd', function ($data) {
       echo $app->util->dd($data);
     });
-
-    // $apper = new \Betasyntax\Core\Application();
-    // $app = $apper->getInstance();
-
-    // $view = $app->container->get($app->getViewObjectStr());
-    //bind the helpers to your views here
     return [
       'wayfinder'=>$wayfinder,
       'flash'=>$flash,
-      'debug'=>$debug,
+      'debugBarHead'=>$debugBarHead,
+      'debugBarBody'=>$debugBarBody,
       'dd'=>$dd
     ];
   }

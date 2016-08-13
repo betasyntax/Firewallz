@@ -12,7 +12,7 @@
     %link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/main.css"}
     - block head
     - endblock
-    / = debugger()
+    = debugBarHead()
   %body{:class=>"#{slug}"}
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container
@@ -29,7 +29,7 @@
       - block body
       - endblock
 
-    / = debugBar()->renderHead()
+    = debugBarBody()
     %footer.footer
       .container
         %p.text-muted
