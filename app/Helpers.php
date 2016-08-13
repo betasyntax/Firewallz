@@ -4,9 +4,13 @@
 
 class Helpers
 {
-  protected $debugbarRender;
+  protected static $debugbarRender;
+  protected static $app;
+
   public static function getHelpers()
   {
+    static::$app = app()->getInstance();
+
     $wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
       \Betasyntax\Wayfinder::_setSlug($slug);
       $data = \Betasyntax\Wayfinder::tree(0);
@@ -22,22 +26,23 @@ class Helpers
 
     $debugBarHead = new \Twig_SimpleFunction('debugBarHead', function () {
       $debugbar = new \DebugBar\StandardDebugBar();  
-      $this->debugbarRender = $debugbar->getJavascriptRenderer();
-      echo $this->debugbarRender->renderHead();
+      static::$debugbarRender = $debugbar->getJavascriptRenderer();
+      echo static::$debugbarRender->renderHead();
     });
 
     $debugBarBody = new \Twig_SimpleFunction('debugBarBody', function () {
-      echo $this->debugbarRender->render();
+      echo static::$debugbarRender->render();
     });
 
     $flash = new \Twig_SimpleFunction('flash', function () {
       error_log("test");
-      echo $app->flash->display(null,false);
+      echo flash()->display(null,false);
     });
 
     $dd = new \Twig_SimpleFunction('dd', function ($data) {
-      echo $app->util->dd($data);
+      echo static::$app->util->dd($data);
     });
+
     return [
       'wayfinder'=>$wayfinder,
       'flash'=>$flash,
