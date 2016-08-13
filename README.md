@@ -12,7 +12,8 @@ The Betasyntax Framework is an easy to use framework based on PHP. It implements
 * Full support for database migrations and seeding thanks to [Phinx](https://github.com/robmorgan/phinx)
 * Utilizes [Twig](http://twig.sensiolabs.org/), [Haml](http://haml.info/) and [Less](http://lesscss.org/) for easy front end development. Don't like twig or haml? You can implement your own!.
 * Uses [League Container](https://github.com/thephpleague/container) for super simple IoC Container Dependency Injection for the entire framework.
-* Use Service Providers to manage what components are loaded and what gets injected into your app. 
+* Use Service Providers to manage what components are loaded and what gets injected into your app.
+* Easy to use Middleware via [Relay](http://relayphp.com/)
 * Modular Authentication system for quick setups. Don't want to use the built in auth system, you can build your own and inject it into your app.
 * Easyily create menus from a database table with a simple command called WayFinder. Allows for active css tags to be applied to active menu items.  
 
@@ -55,13 +56,21 @@ use Betasyntax\BaseController;
 class HomeController extends Controller
 {
   public $domain = 'web'; // can be admin or web. If admin the user will need to be authenticated
-  protected $close_session = true;
+  protected $close_session = true; // turn off sessions writting if you have a lot of heavy ajax calls
+  
+  public function __construct()
+  {
+    // this controller now requires a logged in session to continue otherwise it redirects to the login page
+    $this->middleware = ['auth']; 
+  }
   
   public function index()
   {
+    // set some variables
     $data = array(
       'slug'=> 'home'
     );
+    // load our view
     return view('home.haml',$data);
   }
   
