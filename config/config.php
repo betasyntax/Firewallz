@@ -6,13 +6,21 @@ return [
   ],
   "host"=> "localhost",
   "port"=> "80",
-  "default_db"=>"mysql",
+  "default_db"=>"pgsql",
   "mysql"=> [
-    "driver"=>"Pdo",
+    "driver"=>"Mysql",
     "host"=>"localhost",
     "user"=>"router",
     "pass"=>"router",
     "schema"=>"router",
-    "errormode"=>"pd::ERRMODE_EXCEPTION"
-  ]
+    "errormode"=>"PDO::ERRMODE_EXCEPTION"
+  ],
+  "pgsql"=> [
+    "driver"=>"Pgsql",
+    "host"=>"localhost",
+    "user"=>"router",
+    "pass"=>"router",
+    "schema"=>"router",
+    "errormode"=>"PDO::ERRMODE_EXCEPTION"
+  ],
 ];

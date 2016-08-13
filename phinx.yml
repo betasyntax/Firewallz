@@ -16,12 +16,12 @@ environments:
         charset: utf8
 
     development:
-        adapter: mysql
+        adapter: pgsql
         host: localhost
         name: router
         user: router
         pass: 'router'
-        port: 3306
+        port: 5432
         charset: utf8
 
     testing:
