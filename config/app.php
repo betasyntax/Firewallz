@@ -8,10 +8,10 @@ return [
     'response'=>'GuzzleHttp\Psr7\Response',
     'router'=>'Betasyntax\Router\Router',
     'middleware'=>'Betasyntax\Router\MiddlewareService',
-    'config'=>'Betasyntax\Config'
+    'config'=>'Betasyntax\Config',
+    'logger'=>'Betasyntax\Logger\Logger',
   ],
   'middleware' => [
-    'logger' => 'Betasyntax\Logger\Logger',
     'auth'=>'Betasyntax\Authentication',
   ]
 ];

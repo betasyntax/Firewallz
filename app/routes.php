@@ -14,4 +14,5 @@ return [
   ['GET',  '/account/password/reset/[*:token]', 'passwordReset@Auth\AuthController'],
   ['GET',  '/login',                            'login@Auth\AuthController'],
   ['GET',  '/logout',                           'logout@Auth\AuthController'],
+  ['GET',  '/account',                           'index@Account\AccountController'],
 ];
