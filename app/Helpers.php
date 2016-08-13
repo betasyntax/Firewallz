@@ -6,8 +6,10 @@ class Helpers
 {
   protected static $debugbarRender;
   protected static $app;
+  protected static $debugbar;
+  protected static $render;
 
-  public static function getHelpers()
+  public static function helpers()
   {
     static::$app = app()->getInstance();
 
@@ -25,9 +27,11 @@ class Helpers
     });
 
     $debugBarHead = new \Twig_SimpleFunction('debugBarHead', function () {
-      $debugbar = new \DebugBar\StandardDebugBar();  
-      static::$debugbarRender = $debugbar->getJavascriptRenderer();
-      echo static::$debugbarRender->renderHead();
+      $app = app()->getInstance();
+      static::$debugbarRender = $app->debugbar;
+      $test = static::$debugbarRender;
+      static::$render = $test->getJsRender();
+      echo static::$render->renderHead();
     });
 
     $debugBarBody = new \Twig_SimpleFunction('debugBarBody', function () {

@@ -15,8 +15,8 @@
         "phpunit/phpunit":"5.4.*",
         "phpunit/php-invoker": "*",
         "robmorgan/phinx":"v0.6.4",
-        "mockery/mockery": "~0.9",
-        "maximebf/debugbar": "1.*"
+        "maximebf/debugbar": "1.*",
+        "mockery/mockery": "~0.9"
     },
     "autoload": {
         "psr-4": {

@@ -10,6 +10,7 @@ return [
     'middleware'=>'Betasyntax\Router\MiddlewareService',
     'config'=>'Betasyntax\Config',
     'logger'=>'Betasyntax\Logger\Logger',
+    'debugbar'=>'Betasyntax\DebugBar\DebugBar',
   ],
   'middleware' => [
     'auth'=>'Betasyntax\Authentication',

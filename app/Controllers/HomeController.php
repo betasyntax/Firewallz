@@ -6,6 +6,7 @@ class HomeController extends Controller
 {
 
   public $domain = 'web';
+  protected $app;
 
   /**
    * [$close_session if you have a lot of AJAX request on your page you might want to set this to true. If true you can't save session variables in this controller]
@@ -24,6 +25,8 @@ class HomeController extends Controller
    */
   public function index()
   {
+    app()->logger->log('info','HomeController');
+    app()->debugbar->addMessage('HomeController');
     $c = array(
       'slug'=> 'home'
     );
