@@ -27,10 +27,6 @@ Or  you can install the development version:
 git clone https://github.com/betasyntax/betasyntax.git ./
 composer install
 ```
-Change some permissions
-```bash
-chmod 777 storage/logs/app.log
-```
 Next reate a database, edit /conf/config.php to your liking and run the migration to get your dynamic menus working.
 ```bash
 vendor/bin/phinx migrate -e development

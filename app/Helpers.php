@@ -11,7 +11,7 @@ class Helpers
 
   public static function helpers()
   {
-    static::$app = app()->getInstance();
+    static::$app = app();
 
     $wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
       \Betasyntax\Wayfinder::_setSlug($slug);
@@ -27,15 +27,24 @@ class Helpers
     });
 
     $debugBarHead = new \Twig_SimpleFunction('debugBarHead', function () {
-      $app = app()->getInstance();
-      static::$debugbarRender = $app->debugbar;
-      $test = static::$debugbarRender;
-      static::$render = $test->getJsRender();
-      echo static::$render->renderHead();
+      $app = app();
+      if( ! $app->isProd()) {
+        static::$debugbarRender = $app->debugbar;
+        $test = static::$debugbarRender;
+        static::$render = $test->getJsRender();
+        echo static::$render->renderHead();
+      } else {
+        echo '';
+      }
     });
 
     $debugBarBody = new \Twig_SimpleFunction('debugBarBody', function () {
-      echo static::$debugbarRender->render();
+      $app = app();
+      if( ! $app->isProd()) {
+        echo static::$debugbarRender->render();
+      } else {
+        echo '';
+      }
     });
 
     $flash = new \Twig_SimpleFunction('flash', function () {

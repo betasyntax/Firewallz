@@ -21,7 +21,7 @@ class AuthController extends Controller
   public function __construct() 
   {
     $this->middleware = ['logger'];
-    $this->app = app()->getInstance();
+    $this->app = app();
     $this->app->auth = $this->app->container->get('Betasyntax\Authentication');
   }
 

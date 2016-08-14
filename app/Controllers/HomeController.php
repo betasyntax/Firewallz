@@ -27,6 +27,7 @@ class HomeController extends Controller
   {
     app()->logger->log('info','HomeController');
     app()->debugbar->addMessage('HomeController');
+    app()->debugbar->addMessage('Environment '.app()->env['env']);
     $c = array(
       'slug'=> 'home'
     );
