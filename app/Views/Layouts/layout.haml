@@ -25,6 +25,7 @@
         #navbar.collapse.navbar-collapse
           - include 'Helpers/mainmenu.haml'
     .container
+      !=flash() 
       - block body
       - endblock
 

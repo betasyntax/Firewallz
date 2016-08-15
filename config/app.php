@@ -9,8 +9,10 @@ return [
     'router'=>'Betasyntax\Router\Router',
     'middleware'=>'Betasyntax\Router\MiddlewareService',
     'config'=>'Betasyntax\Config',
+    'filesystem'=>'League\Filesystem',
     'logger'=>'Betasyntax\Logger\Logger',
     'debugbar'=>'Betasyntax\DebugBar\DebugBar',
+    'filesystem'=>'Betasyntax\Core\MountManager\Mounts',
     // 'dbcollector'=>'Betasyntax\DebugBar\DBCollector',
   ],
   'middleware' => [

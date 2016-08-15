@@ -1,7 +1,6 @@
 <?php namespace App\Controllers;
 
 use App\Controllers\Controller;
-use App\Models\Migration;
 
 class HomeController extends Controller
 {
@@ -29,7 +28,6 @@ class HomeController extends Controller
   {
     app()->logger->log('info','HomeController');
     debugStack("HomeController");
-    $menu = Migration::find(1);
     $c = array(
       'slug'=> 'home'
     );
