@@ -3,4 +3,4 @@
 Homestead.yaml
 Homestead.json
 .env
-/storage/logs
+/storage/logs/*
