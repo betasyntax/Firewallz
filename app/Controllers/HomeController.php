@@ -1,6 +1,7 @@
 <?php namespace App\Controllers;
 
 use App\Controllers\Controller;
+use App\Models\Migration;
 
 class HomeController extends Controller
 {
@@ -16,6 +17,7 @@ class HomeController extends Controller
 
   public function __construct()
   {
+    parent::__construct();
     $this->middleware = [];
   }
 
@@ -26,11 +28,18 @@ class HomeController extends Controller
   public function index()
   {
     app()->logger->log('info','HomeController');
-    app()->debugbar->addMessage('HomeController');
-    app()->debugbar->addMessage('Environment '.app()->env['env']);
+    debugStack("HomeController");
+    $menu = Migration::find(1);
     $c = array(
       'slug'=> 'home'
     );
+    // $app = \Betasyntax\Core\Application::getInstance();
+    // $app = $app->getInstance();
+    // $profile = new \Twig_Profiler_Profile();
+    // $twig = app()->twig;
+    // app()->twig->addExtension(new \Twig_Extension_Profiler($profile));
+    // $dumper = new \Twig_Profiler_Dumper_Html();
+    // echo $dumper->dump($profile);
     return view('home.haml',$c);
   }
   

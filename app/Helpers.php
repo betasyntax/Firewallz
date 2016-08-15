@@ -13,11 +13,6 @@ class Helpers
   {
     static::$app = app();
 
-    $wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
-      \Betasyntax\Wayfinder::_setSlug($slug);
-      $data = \Betasyntax\Wayfinder::tree(0);
-    });
-
     $brandingStatus = new \Twig_SimpleFunction('brandingStatus', function () {
       $x = Setting::search('key_name','=','show_branding',1);
       for($i=0;$i<count($x);$i++) {
@@ -26,42 +21,8 @@ class Helpers
       return $s;
     });
 
-    $debugBarHead = new \Twig_SimpleFunction('debugBarHead', function () {
-      $app = app();
-      if( ! $app->isProd()) {
-        static::$debugbarRender = $app->debugbar;
-        $test = static::$debugbarRender;
-        static::$render = $test->getJsRender();
-        echo static::$render->renderHead();
-      } else {
-        echo '';
-      }
-    });
-
-    $debugBarBody = new \Twig_SimpleFunction('debugBarBody', function () {
-      $app = app();
-      if( ! $app->isProd()) {
-        echo static::$debugbarRender->render();
-      } else {
-        echo '';
-      }
-    });
-
-    $flash = new \Twig_SimpleFunction('flash', function () {
-      error_log("test");
-      echo flash()->display(null,false);
-    });
-
-    $dd = new \Twig_SimpleFunction('dd', function ($data) {
-      echo static::$app->util->dd($data);
-    });
-
     return [
-      'wayfinder'=>$wayfinder,
-      'flash'=>$flash,
-      'debugBarHead'=>$debugBarHead,
-      'debugBarBody'=>$debugBarBody,
-      'dd'=>$dd
+      'brandingStatus'=>$brandingStatus
     ];
   }
 }

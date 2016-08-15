@@ -30,8 +30,8 @@ class AuthController extends Controller
     if (empty($this->session->token)) {
       $this->app->session->token = bin2hex(random_bytes(32));
     }
-
     $this->token = $this->app->session->token;
+    // dd($this->token);
   }
 
   public function login()
@@ -187,10 +187,12 @@ class AuthController extends Controller
     $this->csrf_token();
     $req = $_REQUEST;
     $new_user = $req['email'];
+    dd('mew');
+    dd($new_user);
     $token = $req['csrf_token'];
     $error_text = '';
     if(isset($req['email'])) {
-      if (hash_equals($token, $this->session->token)) {
+      if (hash_equals($token, $this->app->session->token)) {
         $user = User::search('email','=',$new_user,1);
         if(isset($user->email)) {
           $user->status = 'disabled';
@@ -216,8 +218,8 @@ class AuthController extends Controller
         $error_text .= 'You must provide appropiate credentials.';
       }
       if($error_text!='') {
-        $this->flash->error($error_text);
-        return view('/account/password/reset?email='.$new_user);
+        flash()->error($error_text);
+        redirect('/account/password/reset?email='.$new_user);
       }
     }
   }
@@ -273,6 +275,7 @@ class AuthController extends Controller
   public function getResetPassword() 
   {
     $this->csrf_token();
+    $req = $_REQUEST;
     $c = array(
       'slug'=>'reset-password',
       'token'=>$this->token,

@@ -11,6 +11,7 @@ return [
     'config'=>'Betasyntax\Config',
     'logger'=>'Betasyntax\Logger\Logger',
     'debugbar'=>'Betasyntax\DebugBar\DebugBar',
+    // 'dbcollector'=>'Betasyntax\DebugBar\DBCollector',
   ],
   'middleware' => [
     'auth'=>'Betasyntax\Authentication',

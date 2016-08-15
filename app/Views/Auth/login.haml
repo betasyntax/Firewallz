@@ -6,10 +6,10 @@ Login
 %h2 Login
 %form#login{:method=>'post',:action=>action}
   %div
-    %input{:name=>'email',id=>'email',:type=>'text',:value=>email,:placeholder=>'Email'}
+    %input{:name=>'email',:id=>'email',:type=>'text',:value=>email,:placeholder=>'Email'}
     %label Email
   %div
-    %input{:name=>'password',id=>'password',:type=>'password',:value=>'',:placeholder=>'Password'}
+    %input{:name=>'password',:id=>'password',:type=>'password',:value=>'',:placeholder=>'Password'}
     %label Password
   %div.options
     %input{:type=>'hidden',:name=>'csrf_token',:id=>'csrf_token',:value=>token}
