@@ -25,9 +25,9 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "mv -Rf ./vendor/betasyntax/betasyntax/* ./",
-            "rm -Rf ./vendor/betasyntax/betasyntax",
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "mv -f ./vendor/betasyntax/betasyntax/* ./",
+            "rm -Rf ./vendor/betasyntax/betasyntax",
             "composer update"
         ]
     }
