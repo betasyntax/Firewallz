@@ -28,7 +28,7 @@
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "mv -f ./vendor/betasyntax/betasyntax/* ./",
             "rm -Rf ./vendor/betasyntax/betasyntax",
-            "composer update"
+            "composer install"
         ]
     }
 }
