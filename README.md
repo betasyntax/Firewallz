@@ -55,10 +55,7 @@ namespace App\Controllers;
 use Betasyntax\BaseController;
 
 class HomeController extends Controller
-{
-  public $domain = 'web'; // can be admin or web. If admin the user will need to be authenticated
-  protected $close_session = true; // turn off sessions writting if you have a lot of heavy ajax calls
-  
+{  
   public function __construct()
   {
     // this controller now requires a logged in session to continue otherwise it redirects to the login page
