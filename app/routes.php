@@ -3,6 +3,7 @@ return [
   ['GET',  '/',                                 'index@HomeController','home'],
   ['GET',  '/welcome',                          'welcome@HomeController','welcome'],
   ['GET',  '/account',                          'index@Account\AccountController','account'],
+  ['GET',  '/notfound',                        'notFoundError@HomeController',''],
   
   ['POST', '/account/password/reset',           'passwordResetFinal@Auth\AuthController','_auth_reset_post'],
   ['POST', '/account/password/reset/view',      'resetPassword@Auth\AuthController','_auth_reset_view_post'],

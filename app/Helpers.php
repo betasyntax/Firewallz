@@ -1,6 +1,4 @@
 <?php namespace App;
-// use Betasyntax\Wayfinder;
-//define your views
 
 class Helpers
 {
