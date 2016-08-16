@@ -12,7 +12,8 @@ return [
     'filesystem'  => 'League\Filesystem',
     'logger'      => 'Betasyntax\Logger\Logger',
     'debugbar'    => 'Betasyntax\DebugBar\DebugBar',
-    'filesystem'  => 'Betasyntax\Core\MountManager\Mounts'
+    'filesystem'  => 'Betasyntax\Core\MountManager\Mounts',
+    'helpers'     => 'App\Functions'
   ],
   'middleware' => [
     'auth'        => 'Betasyntax\Authentication',

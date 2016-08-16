@@ -23,9 +23,6 @@
           "App\\":"app/"
         }
     },
-    "files": [
-        "app/Functions.php"
-    ],
     "scripts": {
         "post-install-cmd": [
             "mv -Rf ./vendor/betasyntax/betasyntax/* ./",

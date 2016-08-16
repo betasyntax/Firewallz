@@ -1,6 +1,7 @@
 <?php namespace App\Controllers;
 
 use App\Controllers\Controller;
+use App\Functions as Fn;
 
 class HomeController extends Controller
 {
@@ -12,6 +13,7 @@ class HomeController extends Controller
 
   public function __construct()
   {
+    parent::__construct();
     $this->middleware = [];
   }
 
@@ -36,7 +38,7 @@ class HomeController extends Controller
   public function welcome()
   {
     $c = array(
-      'var_one'=> myFunction(),
+      'var_one'=> Fn::myFunction(),
       'slug'=> 'welcome'
     );
     return view('welcome.haml',$c);
@@ -44,6 +46,6 @@ class HomeController extends Controller
 
   public function notFoundError()
   {
-    return view('404.haml');
+    return view('Errors/404.haml');
   }
 }

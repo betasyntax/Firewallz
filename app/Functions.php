@@ -1,14 +1,20 @@
-<?php
+<?php namespace App;
 
-if ( ! function_exists('myFunction'))
+/**
+ * All these functions should be static but its really up to use. To use these functions in your app just do:
+ * use App/Functions as Fn;
+ *
+ * $x = Fn::myFunction();
+ */
+Class Functions
 {
   /**
-   * My function prints hello world
-   *
-   * @return application main instance
+   * Returns a simple hello world function 
+   * @param  string $text Provide the text you want to be displayed
+   * @return string
    */
-  function myFunction($text = 'Betasyntax')
+  public static function myFunction($text = 'Betasyntax')
   {
-    echo "Hello World from " . $text;
+    return "Hello World from " . $text;
   }
 }
