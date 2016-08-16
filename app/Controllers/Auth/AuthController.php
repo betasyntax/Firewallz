@@ -102,14 +102,14 @@ class AuthController extends Controller
     // $mail->SMTPDebug = 2;                            // Enable verbose debug output
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
-    $mail->Username = 'pynewbie@gmail.com';
-    $mail->Password = 'Iamtheone!';
+    $mail->Username = 'youremail@gmail.com';
+    $mail->Password = 'your email address password';
     $mail->SMTPAuth = true;
 
-    $mail->From = 'pynewbie@gmail.com';
-    $mail->FromName = 'tester';
-    $mail->AddAddress('pynewbie@gmail.com');
-    $mail->AddReplyTo('pynewbie@gmail.com', 'Information');
+    $mail->From = 'youremail@gmail.com';
+    $mail->FromName = 'Your Company Name';
+    $mail->AddAddress('youremail@gmail.com');
+    $mail->AddReplyTo('youremail@gmail.com', 'Information');
 
     $mail->IsHTML(true);
     $action='account/activate/';
