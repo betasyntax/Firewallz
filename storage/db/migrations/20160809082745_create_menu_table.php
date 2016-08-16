@@ -10,7 +10,7 @@ class CreateMenuTable extends AbstractMigration
     public function up()
     {
         $menus = $this->table('menus');
-        $menus->addColumn('parent_id', 'integer', array('limit' => 11,'default' => 1))
+        $menus->addColumn('parent_id', 'integer', array('limit' => 11,'default' => 0))
               ->addColumn('title', 'string', array('limit' => 45))
               ->addColumn('url', 'string', array('limit' => 255,'null' => true))
               ->addColumn('slug', 'string', array('limit' => 45))
@@ -21,7 +21,6 @@ class CreateMenuTable extends AbstractMigration
               ->addColumn('created_at', 'datetime', array('null' => true))
               ->addIndex(array('title', 'url', 'slug'), array('unique' => true))
               ->save();
-        // }
     }
 
     /**

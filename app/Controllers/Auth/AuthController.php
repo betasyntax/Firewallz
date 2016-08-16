@@ -3,7 +3,7 @@
 use App\Controllers\Controller;
 use App\Models\User;
 use Betasyntax\Core\Application;
-use PHPMailer;
+use Betasyntax\Mailer;
 
 class AuthController extends Controller
 {
@@ -57,7 +57,7 @@ class AuthController extends Controller
   { 
     $this->csrf_token();
     $c = array(
-      'slug'=>'login',
+      'slug'=>'signup',
       'token'=>$this->token,
       'email'=>isset($_GET['email']) ? $_GET['email'] : '',
       'action' => $this->signupUrl
@@ -83,11 +83,11 @@ class AuthController extends Controller
       $user->activation_code='';
       $user->status = 'enabled';
       if(User::save()) {
-        $this->flash->success('Account activated. Login below.');
-        return redirect(app()->loginUrl);
+        flash()->success('Account activated. Login below.');
+        return redirect($this->loginUrl);
       } 
     } else {
-      return redirect(app()->loginUrl);
+      return redirect($this->loginUrl);
     }
   }
 
@@ -95,23 +95,6 @@ class AuthController extends Controller
   {
     $user = User::search('email','=',$req['email'],1);
 
-    $mail = new PHPMailer();
-    $mail->IsSMTP();
-    $mail->CharSet="UTF-8";
-    $mail->SMTPSecure = 'tls';
-    // $mail->SMTPDebug = 2;                            // Enable verbose debug output
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 587;
-    $mail->Username = 'pynewbie@gmail.com';
-    $mail->Password = 'Iamtheone!';
-    $mail->SMTPAuth = true;
-
-    $mail->From = 'pynewbie@gmail.com';
-    $mail->FromName = 'tester';
-    $mail->AddAddress('pynewbie@gmail.com');
-    $mail->AddReplyTo('pynewbie@gmail.com', 'Information');
-
-    $mail->IsHTML(true);
     $action='account/activate/';
     $sub = 'Please activate your account.';
     $cnt1  = 'activate your account';
@@ -120,12 +103,24 @@ class AuthController extends Controller
       $sub = 'Password Reset Request';
       $cnt1  = 'reset your password';
     }
-    $mail->Subject = $sub;
-    $mail->AltBody    = 'Please click on this link to '.$cnt1.': <a href="http://betasyntax.com:8080/'.$action.$user->activation_code.'">http://betasyntax.com:8080/'.$action.$user->activation_code.'</a>';
-    $mail->Body    = 'Please click on this link to '.$cnt1.': <a href="http://betasyntax.com:8080/'.$action.$user->activation_code.'">http://betasyntax.com:8080/'.$action.$user->activation_code.'</a>';
+    dd($user->activation_code);
+    // exit();
+    $Subject = $sub;
+    $AltBody    = 'Please click on this link to '.$cnt1.': <a href="http://httpserver:8081/'.$action.$user->activation_code.'">http://httpserver:8081/'.$action.$user->activation_code.'</a>';
+    $Body    = 'Please click on this link to '.$cnt1.': <a href="http://httpserver:8081/'.$action.$user->activation_code.'">http://httpserver:8081/'.$action.$user->activation_code.'</a>';
 
+    $data = [
+      'from'          =>'pynewbie@gmail.com',
+      'FromName'      =>'tester',
+      'replyToAddress'=>['pynewbie@gmail.com', 'Information'],
+      'to'            =>$user->email,
+      'subject'       =>$Subject,
+      'AltBody'       =>$AltBody,
+      'Body'          =>$Body
+    ];
+    $mail = new Mailer($data);
     if(!$mail->send()) {
-      echo 'Mailer Error: ' . $mail->ErrorInfo;
+      echo 'Mailer Error: ' . $mail->getMailer()->ErrorInfo;
     } else {
       return true;
     }
@@ -167,7 +162,7 @@ class AuthController extends Controller
             $c = array(
               'slug'=>'login',
             );
-            $this->flash->success('Successfully updated your password.');
+            flash()->success('Successfully updated your password.');
             return view('Auth/login.haml', $c);
           }
         } 
@@ -178,7 +173,7 @@ class AuthController extends Controller
       $error_text .= 'Both fiels are required.';
     }
     if($error_text!='') {
-      $this->flash->error($error_text);
+      flash()->error($error_text);
       return redirect('/account/password/reset/'.$req['reset_token']);
     }
   }
@@ -187,8 +182,6 @@ class AuthController extends Controller
     $this->csrf_token();
     $req = $_REQUEST;
     $new_user = $req['email'];
-    dd('mew');
-    dd($new_user);
     $token = $req['csrf_token'];
     $error_text = '';
     if(isset($req['email'])) {
@@ -233,7 +226,7 @@ class AuthController extends Controller
     $token = $req['csrf_token'];
     $error_text = '';
     if($req['email']!=''&&$req['password']!=''&&$req['password1']!='') {
-      if (hash_equals($token, $this->session->token)) {   
+      if (hash_equals($token, app()->session->token)) {   
         if(filter_var($new_user, FILTER_VALIDATE_EMAIL)) {
           $user = User::search('email','=',$new_user,1);    
           if(!$user) {
@@ -292,8 +285,9 @@ class AuthController extends Controller
     $token = $req['csrf_token'];
     if(!empty($req['email'])&&!empty($req['password'])) {
       if (hash_equals($token, $this->app->session->token)) {
+
         if($this->app->auth->authenticate($req)) {
-          $this->session->isLoggedIn = 1;
+          $this->app->session->isLoggedIn = 1;
           flash()->success('Logged in successfully');
           return redirect('/');
         } else {

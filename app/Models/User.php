@@ -7,8 +7,6 @@ use Betasyntax\Model;
 Class User extends Model {
 
   protected static $activation_code;
-  public static $has_one = 'user_properties';
-  public static $has_many = 'user_properties';
   public static $cascade_delete = true;
 
   public static function createUser($req) 

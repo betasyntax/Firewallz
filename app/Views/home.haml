@@ -5,6 +5,11 @@ Home
 - block body
 %p
   Welcome to the the Betasyntax PHP Web Framework. Try it out!
+  %br/
+  = link_to('Welcome','welcome','',[['class','test'],['id','texter']])
+  %br/
+  = link_to_remote('Docs','http://github.com/betasyntax/betasyntax',[['target','_blank']])
+  
 - endblock
 - block jsFooter
 - endblock

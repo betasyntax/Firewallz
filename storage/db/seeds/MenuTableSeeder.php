@@ -36,6 +36,17 @@ class MenuTableSeeder extends AbstractSeed
               'site_order'   => '0',
               'updated_at'   => date('Y-m-d H:i:s'),
               'created_at'   => date('Y-m-d H:i:s')
+          ),
+          array(
+              'parent_id'    => 0,
+              'title'        => 'Account',
+              'url'          => 'account',
+              'slug'         => 'account',
+              'type'         => 'internal',
+              'status'       => 'enabled',
+              'site_order'   => '0',
+              'updated_at'   => date('Y-m-d H:i:s'),
+              'created_at'   => date('Y-m-d H:i:s')
           )
         );
 
