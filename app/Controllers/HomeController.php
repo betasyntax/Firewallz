@@ -2,6 +2,7 @@
 
 use App\Controllers\Controller;
 use App\Functions as Fn;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,9 @@ class HomeController extends Controller
   {
     app()->logger->log('info','HomeController');
     debugStack("HomeController");
+    $user = User::find_by(['email'=>['admin@admin.com','pynewbie@gmail.com','test@test.ca']]);
+    $user = User::find(1);
+    debug($user,'User data home controller');
     $c = array(
       'slug'=> 'home'
     );
