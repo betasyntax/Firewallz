@@ -26,9 +26,14 @@ class HomeController extends Controller
   {
     app()->logger->log('info','HomeController');
     debugStack("HomeController");
-    $user = User::find_by(['email'=>['admin@admin.com','pynewbie@gmail.com','test@test.ca']]);
-    $user = User::find(1);
-    debug($user,'User data home controller');
+    $user = User::find_by(['id'=>[1,59],'email'=>['pynewbie@gmail.com']]);
+    debug($user,'user');
+    $user1 = User::find_by(1);
+    debug($user1,'user1');
+    $user2 = User::find_by(['email'=>['admin@admin.com','pynewbie@gmail.com','test@test.com']]);
+    debug($user2,'user2');
+    $user3 = User::find([1,59]);
+    debug($user3,'user3');
     $c = array(
       'slug'=> 'home'
     );

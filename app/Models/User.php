@@ -7,8 +7,10 @@ use Betasyntax\Model;
 Class User extends Model {
 
   protected static $activation_code;
-  public static $cascade_delete = true;
 
+  
+  public static $has_many = 'menus';
+  
   public static function createUser($req) 
   {
     self::$activation_code = bin2hex(random_bytes(32));
