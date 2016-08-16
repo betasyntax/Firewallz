@@ -95,26 +95,7 @@ class AuthController extends Controller
   {
     $user = User::search('email','=',$req['email'],1);
 
-<<<<<<< HEAD
-=======
-    $mail = new PHPMailer();
-    $mail->IsSMTP();
-    $mail->CharSet="UTF-8";
-    $mail->SMTPSecure = 'tls';
-    // $mail->SMTPDebug = 2;                            // Enable verbose debug output
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 587;
-    $mail->Username = 'youremail@gmail.com';
-    $mail->Password = 'your email address password';
-    $mail->SMTPAuth = true;
 
-    $mail->From = 'youremail@gmail.com';
-    $mail->FromName = 'Your Company Name';
-    $mail->AddAddress('youremail@gmail.com');
-    $mail->AddReplyTo('youremail@gmail.com', 'Information');
-
-    $mail->IsHTML(true);
->>>>>>> 6aef0581fc48708cb2c2245b8b32696a6e90149d
     $action='account/activate/';
     $sub = 'Please activate your account.';
     $cnt1  = 'activate your account';
@@ -123,7 +104,6 @@ class AuthController extends Controller
       $sub = 'Password Reset Request';
       $cnt1  = 'reset your password';
     }
-    dd($user->activation_code);
     // exit();
     $Subject = $sub;
     $AltBody    = 'Please click on this link to '.$cnt1.': <a href="http://httpserver:8081/'.$action.$user->activation_code.'">http://httpserver:8081/'.$action.$user->activation_code.'</a>';
