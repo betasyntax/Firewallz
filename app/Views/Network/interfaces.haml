@@ -1,0 +1,27 @@
+- extends 'Layouts/layout.haml'
+- block title
+Network Interfaces
+- endblock
+-block heading
+%h2 Network Interfaces
+- endblock
+- block body
+// .row
+//   .col-md-12
+//     %button#update-iptables.ping-site Ping
+//     %button#update-iptables.status Firewall Status
+//     // %button#update-iptables.start Start Firewall
+//     // %button#update-iptables.stop Stop Firewall
+//     %button#update-iptables.restart Restart Firewall
+//     %button#update-iptables.stop Panic
+.row
+  .col-md-12
+    #{networks}
+    %table#data.table.table-hover.table-condensed
+- endblock
+
+- block jsFooter
+:javascript
+
+
+- endblock

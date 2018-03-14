@@ -1,0 +1,322 @@
+- extends 'Layouts/layout.haml'
+- block title
+Dashboard
+- endblock
+-block heading
+%h2 Dashboard
+- endblock
+- block body
+
+.row
+  .col-md-6
+    %dl
+      %dt.heading
+        System
+      %dd.heading
+        &nbsp;
+      %dt
+        Hostname
+      %dd
+        #{internal_iface_hostname}.#{internal_iface_domain}
+      
+      %dt
+        OS
+      %dd
+        #{os}
+      %dt
+        Kernel
+      %dd
+        #{uname}
+      %dt
+        Uptime
+      %dd
+        #{uptime}
+      %dt
+        CPU
+      %dd
+        - set cnt = 0
+        - for item in cpu_count
+          - set cnt = cnt + 1
+          - if cnt == 1
+            #{cpu_name} 
+            = item|replace({'CPU(s): ': 'x'})
+            Cpu(s)
+            %br
+          - elseif cnt == 4
+            = item
+          - else
+            = item
+            %br 
+      %dt
+        Disks
+      %dd
+        - set cnt = 0
+        - set dcnt = 1
+        - set used = ''
+        - set class1 = ''
+        - for disk in disks
+          - if dcnt == 1
+            - set class1 = 'first'
+          .mount{:class=>class1}
+            - set class1 = ''
+            %img.drive{:src=>'/img/External.png', :alt=>'Hard Drive'}
+            .mount-info
+              - for item in disk
+                - set cnt = cnt + 1
+                - if cnt == 1
+                  = item
+                - if cnt == 2
+                  (#{item|trim})
+                  %br 
+                - if cnt == 3
+                  - set used = item
+                  .mount-used
+                    .mount-used-inner{:style=>"width:#{item}"}
+                - if cnt == 4 or cnt == 5
+                  .mount-used-info
+                    - if cnt == 4
+                      = item
+                      GB free of&nbsp;
+                    - if cnt == 5
+                      = item 
+                      GB (#{used})
+                      - set cnt = 0
+                      - set dcnt = dcnt + 1
+  .col-md-6
+    %dl
+      %dt.heading
+        Stats
+      %dd.heading
+        &nbsp;
+      %dt
+        CPU Usage
+      %dd
+        #cpuGrapherOne
+      %dt
+        CPU Temps
+      %dd
+        - set cnt = 0
+        - for temp in core_temps2
+          Cpu(#{cnt}) 
+          = temp
+          %br
+          - set cnt = cnt + 1
+      %dt
+        Ram
+      %dd
+        %canvas#mem{:width=>'55',:height=>'55'}
+        #ram-info
+          %span.used-ram
+            Used: #{used_ram} Gb of #{ram_total} Gb
+          %span.free-ram
+            Free: #{free_ram} Gb 
+          %span.cached-ram
+            Cached: #{cached_ram} Gb
+      %dt
+        Total Processes
+      %dd
+        #{total_process}
+      %dt
+        WAN
+      %dd
+        .net-info1
+          #{wan} (#{wan_ip})
+        #net-wan
+        #net-wan-tx
+        .net-info2
+          #{wan_speed} Mb Down #{wan_speed_up} Mb Up
+      %dt
+        LAN
+      %dd
+        .net-info1
+          #{lan} (#{lan_ip})
+        #net-lan
+        #net-lan-tx
+        .net-info2
+          #{lan_speed} Mb Down #{lan_speed_up} Mb Up
+      %dt
+        Total Connections
+      %dd
+        #{net_con_cnt}
+
+- endblock
+- block jsFooter
+%script{:type=>"text/javascript", :src=>"/js/inlineNetter.js"}
+%script{:type=>"text/javascript", :src=>"/js/inlineCpuGrapher.js"}
+%script{:type=>"text/javascript", :src=>"/js/flot/jquery.flot.min.js"}
+
+%script{:type=>"text/javascript", :src=>"/js/flot/jquery.flot.time.js"}
+// %script{:type=>"text/javascript", :src=>"/js/flot/jshashtable-2.1.js"}
+// %script{:type=>"text/javascript", :src=>"/js/flot/jquery.numberformatter-1.2.3.min.js"}
+%script{:type=>"text/javascript", :src=>"/js/flot/jquery.flot.symbol.js"}
+
+// %script{:type=>"text/javascript", :src=>"/js/flot/jquery.flot.axislabels.js"}
+- set data_k = core_temps2
+:javascript
+
+  $(document).ready(function () {
+    $('#net-wan').inlineNetter({
+      'dataUrl':'/net/speeds/#{wan}',
+      'txType':'down',
+      'interv':'2000',
+      'max':'#{wan_speed}'
+    });
+    $('#net-wan-tx').inlineNetter({
+      'dataUrl':'/net/speeds/#{wan}',
+      'txType':'up',
+      'interv':'2000',
+      'max':'#{wan_speed_up}'
+    });
+    $('#net-lan').inlineNetter({
+      'dataUrl':'/net/speeds/#{lan}',
+      'txType':'down',
+      'interv':'2000',
+      'max':'#{lan_speed}'
+    });
+    $('#net-lan-tx').inlineNetter({
+      'dataUrl':'/net/speeds/#{lan}',
+      'txType':'up',
+      'interv':'2000',
+      'max':'#{lan_speed_up}'
+    });
+    x = "#{cpu_count_total}";
+    g = x.replace("CPU(s):                ","");
+
+    $('#cpuGrapherOne').inlineCpuGrapher({
+      'dataUrl':'/cpu/utilization',
+      'interv':'1000',
+      'totalCpus': g
+    });
+
+    var canvas = document.getElementById("mem");
+    var ctx = canvas.getContext("2d");
+    var lastend = 0;
+    var data = [#{used_ram},#{cached_ram},#{free_ram} ]; // If you add more data values make sure you add more colors
+    var myTotal = 0; // Automatically calculated so don't touch
+    var myColor = ['#3660a9', 'orange', '#28b54b']; // Colors of each slice
+
+    for (var e = 0; e < data.length; e++) {
+      myTotal += data[e];
+    }
+
+    for (var i = 0; i < data.length; i++) {
+      ctx.fillStyle = myColor[i];
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, canvas.height / 2);
+      // Arc Parameters: x, y, radius, startingAngle (radians), endingAngle (radians), antiClockwise (boolean)
+      ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + (Math.PI * 2 * (data[i] / myTotal)), false);
+      ctx.lineTo(canvas.width / 2, canvas.height / 2);
+      ctx.fill();
+      lastend += Math.PI * 2 * (data[i] / myTotal);
+    }
+
+
+    var data = [];
+    var dataset;
+    var totalPoints = 100;
+    var updateInterval = 1000;
+    var now = new Date().getTime();
+    
+    String.prototype.replaceAll = function(search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
+
+    function GetData() {
+      // test = $.parseJSON#{core_temps2};
+      test = "#{core_temps2}";
+      test2 = test.replaceAll('&quot;','"');
+      console.log(test2);
+      // data.shift();
+
+      // while (data.length < totalPoints) {     
+      //     var y = Math.random() * 100;
+      //     var temp = [now += updateInterval, y];
+
+      //     data.push(temp);
+      // }
+    }
+
+    var options = {
+        series: {
+            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
+            }
+        },
+        xaxis: {
+            mode: "time",
+            tickSize: [2, "second"],
+            tickFormatter: function (v, axis) {
+                var date = new Date(v);
+
+                if (date.getSeconds() % 20 == 0) {
+                    var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                    var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                    var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                    return hours + ":" + minutes + ":" + seconds;
+                } else {
+                    return "";
+                }
+            },
+            axisLabel: "Time",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial',
+            axisLabelPadding: 10
+        },
+        yaxis: {
+            min: 0,
+            max: 100,        
+            tickSize: 5,
+            tickFormatter: function (v, axis) {
+                if (v % 10 == 0) {
+                    return v + "%";
+                } else {
+                    return "";
+                }
+            },
+            axisLabel: "CPU loading",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial',
+            axisLabelPadding: 6
+        },
+        legend: {        
+            labelBoxBorderColor: "transparent"
+        },
+        grid: {                
+            backgroundColor: "#000000",
+            // tickColor: "#008040"
+            tickColor: "transparent",
+            borderColor: "#252525",
+            borderWidth: 1
+        }
+    };
+
+    // $(document).ready(function () {
+    //     GetData();
+    //     dataset = [
+    //         { label: "CPU0", data: data, color: "#3660a9" },
+
+    //         { label: "CPU1", data: data, color: "#b4ff27;" }
+    //     ];
+
+    //     $.plot($("#flot-placeholder1"), dataset, options);
+
+    //     function update() {
+    //         GetData();
+    //         $.plot($("#flot-placeholder1"), dataset, options)
+    //         setTimeout(update, updateInterval);
+    //     }
+
+    //     update();
+  });
+
+
+
+
+
+- endblock

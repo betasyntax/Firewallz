@@ -1,0 +1,15 @@
+1 List all current settings
+
+external_iface eth1
+external_iface_type dhcp
+external_iface_link 30
+external_iface_hwaddr 00:1c:c0:8f:da:cc
+
+internal_iface eth2
+internal_iface_type static 
+internal_iface_link 1000
+internal_iface_ip 10.0.1.1
+internal_iface_subnet 255.255.255.0
+internal_iface_hostname router
+internal_iface_domain localdomain.local
+

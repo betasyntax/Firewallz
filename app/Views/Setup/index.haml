@@ -1,0 +1,131 @@
+- extends 'Layouts/layout.haml'
+- block title
+Setup Wizard
+- endblock
+- block body
+%form{:method=>'post',:action=>'/setup/network'}
+  .row
+    .col-md-12
+      %h2 
+        Network Setup
+      %button#update-net
+        Update Network Configuration
+  .row
+    .col-md-6
+      %h5 
+        Wan
+        %i (#{external_iface})
+        - if ping == true
+          Connected
+        - else
+          Not Connected
+        %a.edit.wan{:href=>"javascript:void(0)"} Edit
+      %dl#wan
+        %dt.labeler Connection Type:
+        %dd =external_iface_type
+        %dt.labeler IP Address:
+        %dd =external_iface_ip
+        %dt.labeler Broadcast:
+        %dd =external_iface_broadcast
+        %dt.labeler Network Mask:
+        %dd =external_iface_netmask
+        %dt.labeler Network Gateway:
+        %dd =external_iface_gateway
+      #edit-wan
+        %dl.wan
+          %dt.labeler.type Connection Type:
+          %dd 
+            %select#external_iface_type{:name=>"external_iface_type"}
+              - if external_iface_type=='static'
+                %option{:value=>"static",:selected=>""} Static
+                %option{:value=>"dhcp"} Dhcp
+              - else 
+                %option{:value=>"static"} Static
+                %option{:value=>"dhcp",:selected=>""} Dhcp
+        %dl#wan-form
+          %dt.labeler IP Address:
+          %dd 
+            %input{:type=>"text",:name=>"external_iface_ip",:value=>"#{external_iface_ip}"}
+          %dt.labeler Broadcast:
+          %dd 
+            %input{:type=>"text",:name=>"external_iface_broadcast",:value=>"#{external_iface_broadcast}"}
+          %dt.labeler Network Mask:
+          %dd
+            %input{:type=>"text",:name=>"external_iface_netmask",:value=>"#{external_iface_netmask}"}
+          %dt.labeler Gateway:
+          %dd 
+            %input{:type=>"text",:name=>"external_iface_gateway",:value=>"#{external_iface_gateway}"}
+    .col-md-6
+      %h5 
+        Lan
+        %i (#{internal_iface})
+        %a.edit.lan{:href=>"javascript:void(0)"} Edit
+      %dl#lan
+        %dt.labeler Connection Type:
+        %dd =internal_iface_type
+        %dt.labeler IP Address:
+        %dd =internal_iface_ip
+        %dt.labeler Broadcast:
+        %dd =internal_iface_broadcast
+        %dt.labeler Network Mask:
+        %dd =internal_iface_netmask
+        %dt.labeler Network:
+        %dd =internal_iface_network
+      #edit-lan
+        %dl#lan
+          %dt.labeler.type Connection Type:
+          %dd
+            %select#internal_iface_type{:name=>"internal_iface_type"}
+              - if internal_iface_type=='static'
+                %option{:value=>"static",:selected=>""} Static
+                %option{:value=>"dhcp"} Dhcp
+              - else 
+                %option{:value=>"static"} Static
+                %option{:value=>"dhcp",:selected=>""} Dhcp
+
+        %dl#lan-form
+          %dt.labeler IP Address:
+          %dd
+            %input{:type=>"text",:name=>"internal_iface_ip",:value=>"#{internal_iface_ip}"}
+          %dt.labeler Broadcast:
+          %dd
+            %input{:type=>"text",:name=>"internal_iface_broadcast",:value=>"#{internal_iface_broadcast}"}
+          %dt.labeler Network Mask:
+          %dd
+            %input{:type=>"text",:name=>"internal_iface_netmask",:value=>"#{internal_iface_netmask}"}
+          %dt.labeler Network:
+          %dd
+            %input{:type=>"text",:name=>"internal_iface_network",:value=>"#{internal_iface_network}"}
+  .row
+    .col-md-6
+      %h5 
+        DNS Configuration
+        %a.edit.dns{:href=>"javascript:void(0)"} Edit
+      %dl#dns
+        %dt.labeler Domain Name:
+        %dd =internal_iface_domain
+        %dt.labeler Hostname:
+        %dd =internal_iface_hostname
+        %dt.labeler DNS Server 1:
+        %dd =external_iface_dns1
+        %dt.labeler DNS Server 2:
+        %dd =external_iface_dns2
+      #edit-dns
+        %dl#dns
+          %dt.labeler Domain Name:
+          %dd
+            %input{:type=>"text",:name=>"internal_iface_domain",:value=>"#{internal_iface_domain}"}
+          %dt.labeler Hostname:
+          %dd
+            %input{:type=>"text",:name=>"internal_iface_hostname",:value=>"#{internal_iface_hostname}"}
+          %dt.labeler DNS Server 1:
+          %dd
+            %input{:type=>"text",:name=>"external_iface_dns1",:value=>"#{external_iface_dns1}"}
+          %dt.labeler DNS Server 2:
+          %dd
+            %input{:type=>"text",:name=>"external_iface_dns2",:value=>"#{external_iface_dns2}"}
+
+
+- endblock
+- block jsFooter
+- endblock

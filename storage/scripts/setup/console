@@ -1,0 +1,3 @@
+#!/bin/sh
+#Set default vars
+php-cgi -q console.php cmd=$1

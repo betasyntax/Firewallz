@@ -1,0 +1,101 @@
+- extends 'Layouts/layout.haml'
+- block title
+Firewall
+- endblock
+-block heading
+%h2 Firewall
+- endblock
+- block body
+.row
+  .col-md-12
+    %button#update-iptables.ping-site Ping
+    %button#update-iptables.status Firewall Status
+    // %button#update-iptables.start Start Firewall
+    // %button#update-iptables.stop Stop Firewall
+    %button#update-iptables.restart Restart Firewall
+    %button#update-iptables.stop Panic
+.row
+  .col-md-12
+    %table#data.table.table-hover.table-condensed
+- endblock
+
+- block jsFooter
+%script{:src=>"/js/inlineTabler.js", :type=>'text/javascript'}
+:javascript
+
+  $(document).ready(function() {  
+    var header = ['Id','Host','Type','Port'];
+    var columns = ['id','dhcps_id','type','port'];
+    var data1 = '';
+    $.get('/iptables/forward/all_hosts',function(data) {
+
+      data1 = $.parseJSON(data);
+      $('table#data').inlineTabler({
+        'editor':true,
+        'header':header, 
+        'protected':[0],
+        'methodType':'GET',
+        'dataUrl':'/iptables/forward/all',
+        'updateUrl':'/iptables/forward/update',
+        'addUrl':'/iptables/forward/add',
+        'delUrl':'/iptables/forward/delete',
+        'columns':columns,
+        'rowsPerPage':10,
+        'tableName':'port_forwarding',
+        'fieldTypes': [
+          ['1','option',
+            data1
+          ],
+          ['2','option',
+            [['TCP','TCP'],
+            ['UDP','UDP']]
+          ]
+        ],
+        'init':true,
+        'updateAfter':function(){
+          console.log('test');
+          $('#update-dnsmasq').attr('class','');
+        }
+      });
+    });
+
+
+  
+    var url = function(s) {
+      alert(s);
+      $(".overlay .inner").html('<iframe id="some_frame_id" src="http://10.0.1.1:8080'+s+'"></iframe>');
+      document.getElementById('some_frame_id').contentWindow.location.reload();
+      $(".overlay .inner").append('<input class="close-modal" type="button" value="Close">');
+      closeModal();
+    };
+
+    $("button#update-iptables.ping-site").click(function(e) {
+      showModal();
+      url('/iptables/cmd/ping');
+    });
+    $("button#update-iptables.status").click(function(e) {
+      showModal();
+      url('/iptables/cmd/status');
+    });
+    $("button#update-iptables.restart").click(function(e) {
+      showModal();
+      url('/iptables/cmd/restart');
+    });
+    $("button#update-iptables.stop").click(function(e) {
+      showModal();
+      url('/iptables/cmd/panic');
+    });
+
+
+
+
+
+
+
+
+
+
+  });
+  
+
+- endblock

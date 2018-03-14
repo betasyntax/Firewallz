@@ -1,0 +1,38 @@
+- extends 'Layouts/layout.haml'
+- block title
+DNS
+- endblock
+-block heading
+%h2 Router Settings
+- endblock
+- block body
+.row
+  .col-md-12
+.row
+  .col-md-12
+    %table#data.table.table-hover.table-condensed
+- endblock
+
+
+- block jsFooter
+%script{:src=>"/js/inlineTabler.js", :type=>'text/javascript'}
+:javascript
+  var header = ['Id','Setting','Value','Description'];
+  var columns = ['id','key_name','value','description'];
+  $('table#data').inlineTabler({
+    'editor':true,
+    'header':header, 
+    'methodType':'GET',
+    'protected':[0],
+    'dataUrl':'/settings/all',
+    'updateUrl':'/settings/update',
+    'addUrl':'/settings/add',
+    'delUrl':'/settings/del',
+    'columns':columns,
+    'rowsPerPage':10,
+    'tableName':'settings',
+    'init':true,
+    'fieldTypes': [],
+  });
+
+- endblock
