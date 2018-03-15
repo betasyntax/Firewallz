@@ -6,6 +6,7 @@ return [
       'mount' => '/public/',
       'file' => [],
       'dir' => []
-    ]
+    ],
+    
   ]
 ];

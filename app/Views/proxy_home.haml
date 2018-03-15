@@ -1,0 +1,50 @@
+- extends 'Layouts/layout.haml'
+- block title
+DNS
+- endblock
+-block heading
+%h2 Reverse Proxy
+- endblock
+- block body
+.row
+  .col-md-12
+    %button#update-sites.disabled Reload Proxy Service 
+.row
+  .col-md-12
+    #data-container
+      %table#data.table.table-hover.table-condensed
+- endblock
+
+- block jsFooter
+%script{:src=>"/js/inlineTabler.js", :type=>'text/javascript'}
+:javascript
+  var header = ['Id','Domain','Alias','Port','Proxy Url','Priority','Status'];
+  var columns = ['id','domain','alias','port','proxy_url','priority','status']
+  $('table#data').inlineTabler({
+    'editor':true,
+    'header':header, 
+    'protected':[0],
+    'methodType':'GET',
+    'dataUrl':'/proxy/sites',
+    'updateUrl':'/proxy/update',
+    'addUrl':'/proxy/add',
+    'delUrl':'/proxy/del',
+    'columns':columns,
+    'rowsPerPage':10,
+    'tableName':'sites',
+    'fieldTypes': [
+      ['6','option',
+        [['Active','active'],
+        ['Disabled','disabled']]
+      ]
+    ],
+    'init':true,
+    'updateAfter':function(){
+      $('#update-sites').attr('class','');
+    },
+    'addAfter':function(){
+      $('#update-sites').attr('class','');
+    }
+  });
+
+- endblock

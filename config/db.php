@@ -15,8 +15,8 @@ return [
   "pgsql"=> [
     "driver"    =>"Pgsql",
     "host"      =>"localhost",
-    "user"      =>"router",
-    "pass"      =>"router",
+    "user"      =>"neo",
+    "pass"      =>"heros",
     "schema"    =>"router",
     "port"      => "5432",
     "errormode" =>"PDO::ERRMODE_EXCEPTION"

@@ -1,8 +1,6 @@
-<?php
+<?php namespace App\Models;
 
-namespace App\Models;
-
-use Betasyntax\Model;
+use App\Models\Model;
 
 Class Menu extends Model {
 }

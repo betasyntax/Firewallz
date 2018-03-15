@@ -11,6 +11,7 @@ class CreateMenuTable extends AbstractMigration
     {
         $menus = $this->table('menus');
         $menus->addColumn('parent_id', 'integer', array('limit' => 11,'default' => 0))
+              ->addColumn('menu_category_id', 'integer', array('limit' => 11,'default' => 0))
               ->addColumn('title', 'string', array('limit' => 45))
               ->addColumn('url', 'string', array('limit' => 255,'null' => true))
               ->addColumn('slug', 'string', array('limit' => 45))

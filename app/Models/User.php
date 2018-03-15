@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use Betasyntax\Model;
-
 Class User extends Model {
 
-  protected static $activation_code;
+  protected $activation_code;
 
-  
-  public static $has_many = 'menus';
-  
-  public static function createUser($req) 
+  public function validate() {
+    return true;
+  }
+
+  public function createUser($req) 
   {
     self::$activation_code = bin2hex(random_bytes(32));
-    $rec = User::create();
+    $userModel = new User;
+    $rec = $userModel->create();
     $rec->email = $req['email'];
     $rec->password = password_hash($req['password'], PASSWORD_DEFAULT);
     $rec->status = 'disabled';
     $rec->activation_code = self::$activation_code;
-    $save = User::save();
+    $save = $rec->save();
     if ($save) {
       return true;
     } else {

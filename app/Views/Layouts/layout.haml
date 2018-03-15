@@ -1,21 +1,27 @@
 !!!
-%html
+%html{:lang=>"en"}
   %head
     %title
-      Welcome &vert;
+      Firewalz.io &dash;
       - block title 
       - endblock
     %meta{:charset=>"utf-8"}
     %meta{'http-equiv'=>"X-UA-Compatible",:content=>"IE=edge"}
-    %meta{:name=>"viewport", :content=>"width=device-width, initial-scale=1"}
+    %meta{:name=>"viewport", :content=>"width=device-width,initial-scale=1"}
     %link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/bootstrap.min.css"}
-    %link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/main.css"}
+    %link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/font-awesome.min.css"}
     - block head
     - endblock
+    %link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/main.css"}
+    %link{:rel=>"shortcut icon", :href=>"/img/favicon.ico", :type=>"image/x-icon"}
+    %link{:rel=>"icon", :href=>"/img/favicon.ico", :type=>"image/x-icon"}
+    %link{:rel=>"manifest", :href=>"/manifest.json"}
   %body{:class=>"#{slug}"}
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container
         .navbar-header
+          %a.logo{:href=>"/"}
+            %img{:src=>"/img/logo-sm.png", :alt=>"logo"}
           %button.navbar-toggle.collapsed{:type=>'button','data-toggle'=>'collapse','data-target'=>'#navbar','aria-expanded'=>'false','aria-controls'=>"navbar"}
             %span.sr-only
               Toggle navigation
@@ -23,19 +29,32 @@
             %span.icon-bar
             %span.icon-bar
         #navbar.collapse.navbar-collapse
+          / helper function wayfinder
           - include 'Helpers/mainmenu.haml'
+          - include 'Helpers/authmenu.haml'
     .container
-      !=flash() 
+      !=flash()
+      - block heading
+      - endblock
+      = pathFinder(slug)
       - block body
       - endblock
-
+      #loader
+        %p
+          Loading data ...
+        %img{:src=>'/img/oval.svg'}
+      
     %footer.footer
       .container
         %p.text-muted
-          Copyright 2016 Betasyntax PHP Web Framework
+          Copyright &copy;
+          - set currentYear = now.year
+          = currentYear|date("Y")
+          Firewallz.io
     %script{:src=>"/js/jquery.min.js"}
-    %script{:src=>"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",:integrity=>"sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",:crossorigin=>"anonymous"}
-    %script{:src=>"/js/main.js"}
+    // %script{:src=>"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",:integrity=>"sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",:crossorigin=>"anonymous"}
+    %script{:src=>"/js/bootstrap.min.js"}
+    %script{:src=>"/js/main.js"}    
     = debugBarHead()
     = debugBarBody()
     - block jsFooter

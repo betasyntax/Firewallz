@@ -1,0 +1,311 @@
+- extends 'Layouts/layout.haml'
+- block title
+Edit Menus
+- endblock
+- block head
+%link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/jquery.nestable.min.css"}
+%link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/tooltipster/tooltipster.bundle.min.css"}
+%link{:rel=>"stylesheet", :type=>"text/css",:href=>"/css/jquery.contextMenu.min.css"}
+- endblock
+-block heading
+%h2 Edit Menus
+- endblock
+- block body
+.row.edit-menus
+  .col-md-12
+    #options-legend
+      .legend
+        %span Legend:
+      .legend.fa.fa-check-circle
+        %span Enabled
+      .legend.fa.fa-ban
+        %span Disabled
+      .legend.fa.fa-eye
+        %span Visible in menu
+      .legend.fa.fa-eye-slash
+        %span Hidden in menu
+      .legend.fa.fa-pencil
+        %span Edit
+.row
+  .col-md-12
+    %div#nestable.dd
+      = WayfinderAdmin(slug,1)
+
+- endblock
+
+
+- block jsFooter
+
+%script{:src=>"/js/jquery.nestable.min.js", :type=>'text/javascript'}
+%script{:src=>"/js/tooltipster/tooltipster.bundle.min.js", :type=>'text/javascript'}
+%script{:src=>"/js/jquery.contextMenu.min.js", :type=>'text/javascript'}
+%script{:src=>"/js/jquery.ui.position.min.js", :type=>'text/javascript'}
+
+:javascript
+  $(document).ready(function() {  
+
+    $(".edit-menus").before('<div class="alert error"></div><div class="alert success"></div>');
+    function flash(type,msg,timing=5000){
+      $('#add-record').hide();
+      $('.alert.'+type).html(msg);
+      $('.alert.'+type).slideDown(function() {
+        setTimeout(function() {
+          $('.alert.'+type).slideUp();
+          $('#add-record').fadeIn().show();
+        }, timing);
+      });
+    }
+    var id;
+    // var el;
+    var x;
+    var z = 0;
+    $.contextMenu({
+      selector: ".edit-options",
+      classNames : {
+        hover:'test-hover',  
+      },
+      trigger: 'left',
+      determinePosition: function($menu){
+        $menu.css('display', 'block')
+          .position({ my: "right top", at: "left top", of: this, offset: "0 5"})
+          .css('display', 'none');
+      },
+      callback: function(key, options) {
+        var m = "clicked: " + key + " on " + $(this).text();
+        window.console && console.log(m) || alert(m); 
+      },
+      items: {
+          addMenuItem: {name: "Add New Item",icon: "fa-plus", callback: function(key, opt){
+            el = $(this).parent().parent();
+            index = $(".dd-list li:last-child").length;
+            lft = $(el).attr('data-lft');
+            rgt = $(el).attr('data-rgt');
+            depth = parseInt($(el).attr('data-depth'))+1;
+            parent_id = parseInt($(el).attr('data-id'))
+            nlft = parseInt(lft) + 1;
+            nrgt = parseInt(lft) + 2;
+            title = 'New Item';
+            $('#nestable').nestable('add', {"parent_id":parent_id,"content":"<strong>New Item</strong>","status":"disabled","id":"0","data-depth":depth,"data-parent-id":parent_id});
+            // el = $('li[data-id="0"]');
+            // el.html('');
+            // el.prepend('<div class="dd-handle dd3-handle">Drag</div>');
+            // el.prepend('<div class="dd3-content bold">New Items<div class="edit-options fa fa-pencil"></div><div class="hidden-options fa fa-eye"></div><div class="status-options fa fa-ban"></div></div>');
+            
+            // x();
+            $.ajax({
+              method: "POST",
+              url: "/menus/add",
+              data: {'menu':window.JSON.stringify({'lft':lft,'rgt':rgt})}
+            }).done(function(msg) {
+              // flash('success','A new menu item has been added.');
+              location.href = location.pathname+"?n="+msg;
+            });
+          }},
+          "sep1": "---------",
+          rename: {name: "Rename", "icon":"fa-i-cursor", callback: function(key, opt){
+            el = $(opt.$trigger[0]).parent().parent();
+            id = el.attr('data-id');
+            $("#node-"+id).hide();
+            $("#node-input-"+id).fadeIn('slow');
+          }},
+          editUrl: {name: "Edit Url", "icon":"fa-i-cursor", callback: function(key, opt){
+            el = $(opt.$trigger[0]).parent().parent();
+            id = el.attr('data-id');
+            console.log(id);
+            $("#menu-url-"+id).hide();
+            $("#node-url-"+id).fadeIn('slow');
+          }},
+          editSlug: {name: "Edit Slug", "icon":"fa-i-cursor", callback: function(key, opt){
+            el = $(opt.$trigger[0]).parent().parent();
+            id = el.attr('data-id');
+            console.log(id);
+            $("#menu-url-"+id).hide();
+            $("#node-url-"+id).fadeIn('slow');
+          }},
+          editType: {name: "Edit Type", "icon":"fa-i-cursor", callback: function(key, opt){
+            el = $(opt.$trigger[0]).parent().parent();
+            id = el.attr('data-id');
+            console.log(id);
+            $("#menu-url-"+id).hide();
+            $("#node-url-"+id).fadeIn('slow');
+          }},
+          status: {name: "Enable/Disable", "icon":"fa-ban", callback: function(key, opt){ 
+            el = $(opt.$trigger[0]).parent().parent();
+            id = el.attr('data-id');
+            if(el.attr('data-status')=='enabled') {
+              value = 'disabled';              
+              $(el.children()[1]).find('.status-options').removeClass('fa-check-circle');
+              $(el.children()[1]).find('.status-options').addClass('fa-ban');
+              $("#node-"+id).parent().addClass('bold');
+            } else {
+              value =  'enabled';
+              $(el.children()[1]).find('.status-options').removeClass('fa-ban');
+              $(el.children()[1]).find('.status-options').addClass('fa-check-circle');
+              $("#node-"+id).parent().removeClass('bold');
+            }
+            el.attr('data-status',value);
+            d = window.JSON.stringify([{'col':'status','id':id,'value':value}]);
+            updateMenuItem(d, 'Successfully '+value+' item.');
+          }},
+          hidden: {name: "Toggle Hidden", "icon":"fa-eye-slash", callback: function(key, opt){ 
+            el = $(opt.$trigger[0]).parent().parent();
+            id = el.attr('data-id');
+            hidden = parseInt(el.attr('data-hidden'));
+            value = 0;
+            if(hidden=='0') {
+              value = 1;
+              msg = 'The menu item is now hidden.'
+              $(el.children()[1]).find('.hidden-options').removeClass('fa-eye');
+              $(el.children()[1]).find('.hidden-options').addClass('fa-eye-slash');
+              $("#node-"+id).parent().addClass('italics');
+            } else if(hidden=='1') {
+              value =  0;
+              msg = 'The menu item is now visible.';
+              $(el.children()[1]).find('.hidden-options').removeClass('fa-eye-slash');
+              $(el.children()[1]).find('.hidden-options').addClass('fa-eye');
+              $("#node-"+id).parent().removeClass('italics');
+            }
+            el.attr('data-hidden',value);
+            d = window.JSON.stringify([{'col':'hidden','id':id,'value':value}]);
+            updateMenuItem(d, msg);
+          }},
+          "sep2": "---------",
+          delete: {name: "Delete", "icon":"fa-trash-o", callback: function(key, opt){ 
+            console.log(key);
+            el = $(opt.$trigger[0]).parent().parent();
+            id = $(el[0]).attr('data-id');
+            lft = $(el[0]).attr('data-lft');
+            rgt = $(el[0]).attr('data-rgt');
+            console.log(id);
+            console.log(lft);
+            console.log(rgt);
+            $('.overlay').append('<div class="outer"><div class="inner"><span>Are you sure you want to delete this record?</span><a href="#" class="delete yes">Yes</a> | <a href="#" class="delete no">No</a></div>');
+            
+            x = window.JSON.stringify([{'id':id,'lft':lft,'rgt':rgt}]);
+            $('.overlay').show();
+            $('.delete.yes').click(function(e) {
+
+              $('.dd').nestable('remove', id);
+              $('.overlay').html('');
+              $('.overlay').hide();
+              flash('success','Successfully deleted the item.');
+              $.ajax({
+                method: "POST",
+                url: "/menus/delete",
+                data: {'menu':x}
+              }).done(function( msg ) {
+                
+
+              });
+            });
+            $('.delete.no').click(function(e) {
+              $('.overlay').html('');
+              $('.overlay').hide();
+            });
+          }}
+      }
+    });
+
+    var x = function() { $('#nestable').nestable({
+      onDragStart: function(l,e){
+        var list   = l.length ? l : $(l.target), output = $("#nestable-output textarea");
+        list1 = list.nestable('toArray');
+      },
+      callback: function(l,e) { // l is the main container // e is the element that was moved
+        var list = l.length ? l : $(l.target), output = $("#nestable-output textarea");
+        if (window.JSON) {
+          x = window.JSON.stringify(list.nestable('toArray'));
+          console.log(x);
+          z = list.nestable('toArray');
+          diff=0;
+          if(JSON.stringify(list1) != JSON.stringify(z)) {
+            diff=1;
+          }
+          if(diff==1) {
+            $.ajax({
+              method: "POST",
+              url: "/menus/update",
+              data: {'menu':x}
+            });
+          }
+        } else {
+            output.html('JSON browser support required for this demo.');
+        }
+      }
+    })};
+    $(".edit-options,.status-options,.hidden-options").hover(function(e){
+      $(e.currentTarget).addClass('edit-options-hover');    
+    }).mouseout(function(e){
+      $(e.currentTarget).removeClass('edit-options-hover');
+    });
+    $(".status_en").click(function(e){
+      console.log('change');
+    });
+    var updateMenuItem = function(values,msg) {
+      $.ajax({
+        method: "POST",
+        url: "/settings/menus/update-item",
+        data: {'menu':values}
+      }).done(function( data ) {
+        if(data='success') {
+          flash('success',data);
+        } else {
+          flash('error',data);
+        }
+      });
+    }
+    z=0;
+    var addedNewUrl = function() {
+      var url_string = location.href;
+      var url = new URL(url_string);
+      var c = url.searchParams.get("n");
+      if(c==1) {
+        var oldURL = location.href;
+        var index = 0;
+        var newURL = oldURL;
+        index = oldURL.indexOf('?');
+        if(index == -1){
+            index = oldURL.indexOf('#');
+        }
+        if(index != -1){
+            newURL = oldURL.substring(0, index);
+        }
+        // document.location.search = '';
+        z=1;
+      }
+    };
+    $(".checkmark").click(function(e) {
+      $("#node-input-"+id).fadeOut('slow',function(){
+        $("#node-"+id).fadeIn('slow');
+          newValue = $("#title-"+id).val();
+          $("#node-"+id).html(newValue);
+          d = window.JSON.stringify([{'col':'title','id':id,'value':newValue}]);
+          updateMenuItem(d,'Successfully renamed item.');
+      });
+    });
+    $(".cancel").click(function(e) {
+      $("#node-input-"+id).fadeOut('slow',function(){
+        $("#node-"+id).fadeIn('slow');
+      });
+    });
+    $(".checkmark1").click(function(e) {
+      $("#node-url-"+id).fadeOut('slow',function(){
+        $("#menu-url-"+id).fadeIn('slow');
+          newValue = $("#url-"+id).val();
+          $("#menu-url-"+id).html(newValue);
+          d = window.JSON.stringify([{'col':'url','id':id,'value':newValue}]);
+          updateMenuItem(d,'Successfully updated url.');
+      });
+    });
+    $(".cancel1").click(function(e) {
+      $("#node-url-"+id).fadeOut('slow',function(){
+        $("#menu-url-"+id).fadeIn('slow');
+      });
+    });
+    $('body').append('<div class="overlay"></div>');
+    x();
+    addedNewUrl();
+  });
+
+  
+- endblock

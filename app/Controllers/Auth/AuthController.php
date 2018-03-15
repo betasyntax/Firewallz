@@ -22,7 +22,7 @@ class AuthController extends Controller
   {
     $this->middleware = ['logger'];
     $this->app = app();
-    $this->app->auth = $this->app->container->get('Betasyntax\Authentication');
+    $this->app->auth = $this->app->container->get('App\Middleware\Authentication');
   }
 
   public function csrf_token() 
@@ -31,7 +31,6 @@ class AuthController extends Controller
       $this->app->session->token = bin2hex(random_bytes(32));
     }
     $this->token = $this->app->session->token;
-    // dd($this->token);
   }
 
   public function login()
@@ -77,12 +76,12 @@ class AuthController extends Controller
     $c = array(
       'slug'=>'activated'
     );
-    // var_dump($token['token']);
-    $user = User::search('activation_code','=',$token['token'],1);
+    $userModel = new User;
+    $user = $userModel->find_by(['activation_code'=>$token['token']]);
     if(isset($user->activation_code)) {
       $user->activation_code='';
       $user->status = 'enabled';
-      if(User::save()) {
+      if($user->save()) {
         flash()->success('Account activated. Login below.');
         return redirect($this->loginUrl);
       } 
@@ -93,9 +92,8 @@ class AuthController extends Controller
 
   public function email_activation_code($req,$reset=false)
   {
-    $user = User::search('email','=',$req['email'],1);
-
-
+    $userModel = new User;
+    $user = $userModel->find_by(['email'=>$req['email']]);
     $action='account/activate/';
     $sub = 'Please activate your account.';
     $cnt1  = 'activate your account';
@@ -104,7 +102,6 @@ class AuthController extends Controller
       $sub = 'Password Reset Request';
       $cnt1  = 'reset your password';
     }
-    // exit();
     $Subject = $sub;
     $AltBody    = 'Please click on this link to '.$cnt1.': <a href="http://httpserver:8081/'.$action.$user->activation_code.'">http://httpserver:8081/'.$action.$user->activation_code.'</a>';
     $Body    = 'Please click on this link to '.$cnt1.': <a href="http://httpserver:8081/'.$action.$user->activation_code.'">http://httpserver:8081/'.$action.$user->activation_code.'</a>';
@@ -129,7 +126,8 @@ class AuthController extends Controller
   public function passwordReset($token) 
   {
     // first check the token with the one in the db
-    $user = User::search('activation_code','=',$token['token'],1);
+    $userModel = new User;
+    $user = $userModel->find_by(['activation_code'=>$token['token']]);
     if(isset($user->email)) {
 
       $this->csrf_token();
@@ -139,13 +137,14 @@ class AuthController extends Controller
         'token'=>$this->token,
         'user_id'=>$user->id,
         'reset_token'=>$token,
-        'action' => app()->resetPassUrl
+        'action' => $this->resetPassUrl
       );
       view('Auth/resetting_password.haml', $c); 
     } else {
       return redirect('/');       
     }
   }
+
   public function passwordResetFinal(){
     $req = $_REQUEST;
     $pass = $req['password'];
@@ -153,12 +152,13 @@ class AuthController extends Controller
     $error_text = '';
     if($req['password']!=''&&$req['password1']!='') {
       if($pass == $pass_repeat) {
-        $user = User::find($req['user_id']);
+        $userModel = new User;
+        $user = $userModel->find($req['user_id']);
         if(isset($user->email)) {
           $user->password = password_hash($req['password'], PASSWORD_DEFAULT);
           $user->activation_code = '';
           $user->status = 'enabled';
-          if(User::save()) {
+          if($user->save()) {
             $c = array(
               'slug'=>'login',
             );
@@ -177,20 +177,20 @@ class AuthController extends Controller
       return redirect('/account/password/reset/'.$req['reset_token']);
     }
   }
+  
   public function resetPassword()
   {
-    $this->csrf_token();
     $req = $_REQUEST;
     $new_user = $req['email'];
     $token = $req['csrf_token'];
     $error_text = '';
     if(isset($req['email'])) {
       if (hash_equals($token, $this->app->session->token)) {
-        $user = User::search('email','=',$new_user,1);
+        $user = $userModel->find_by(['email'=>$new_user]);
         if(isset($user->email)) {
           $user->status = 'disabled';
           $user->activation_code =bin2hex(random_bytes(32));
-          if(User::save()) {
+          if($user->save()) {
             if($this->email_activation_code($req,true)) {
               $this->csrf_token();
               $c = array(
@@ -205,7 +205,7 @@ class AuthController extends Controller
             $error_text .= 'The email provided is not on file.';
           }
         } else {
-          $error_text .= 'All fields are required.';
+          $error_text .= 'Sorry please try again.';
         }
       } else {
         $error_text .= 'You must provide appropiate credentials.';
@@ -228,11 +228,12 @@ class AuthController extends Controller
     if($req['email']!=''&&$req['password']!=''&&$req['password1']!='') {
       if (hash_equals($token, app()->session->token)) {   
         if(filter_var($new_user, FILTER_VALIDATE_EMAIL)) {
-          $user = User::search('email','=',$new_user,1);    
+          $userModel = new User;
+          $user = $userModel->find_by(['email'=>$new_user]);    
           if(!$user) {
             if($pass == $pass_repeat) {
               if(strlen($pass)>=5) {
-                if(User::createUser($req)) {
+                if($userModel->createUser($req)) {
                   if($this->email_activation_code($req)) {
                     return redirect($this->signupSuccessUrl);
                   }
@@ -285,11 +286,14 @@ class AuthController extends Controller
     $token = $req['csrf_token'];
     if(!empty($req['email'])&&!empty($req['password'])) {
       if (hash_equals($token, $this->app->session->token)) {
-
         if($this->app->auth->authenticate($req)) {
           $this->app->session->isLoggedIn = 1;
           flash()->success('Logged in successfully');
-          return redirect('/');
+          if(app()->session->requestPath=='') {
+            return redirect('/');
+          } else {
+            return redirect(app()->session->requestPath);
+          }
         } else {
           flash()->error('No account exists with those credentials or your account hasn\'t been activated yet.');
           return redirect($this->loginUrl);

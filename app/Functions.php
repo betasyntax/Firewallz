@@ -17,4 +17,13 @@ Class Functions
   {
     return "Hello World from " . $text;
   }
+
+  public static function isLoggedIn()
+  {
+    if(app()->session->isLoggedIn==1) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 }

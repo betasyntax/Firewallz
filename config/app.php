@@ -1,21 +1,21 @@
 <?php
 return [
-  'providers' => [
+  'core_providers' => [
     'functions'   => 'Betasyntax\Functions',
+    'debugbar'    => 'Betasyntax\DebugBar\DebugBar',
+    'router'      => 'Betasyntax\Router\Router',
+    'mountManager'=> 'Betasyntax\Core\MountManager\Mounts',
+    'logger'      => 'Betasyntax\Logger\Logger',
     'view'        => 'Betasyntax\View\ViewHaml',
-    'auth'        => 'Betasyntax\Authentication',
+  ],
+  'providers' => [
+    'helpers'     => 'App\Functions',
+    'middleware'  => 'Betasyntax\Router\MiddlewareService',
     'request'     => 'GuzzleHttp\Psr7\Request',
     'response'    => 'GuzzleHttp\Psr7\Response',
-    'router'      => 'Betasyntax\Router\Router',
-    'middleware'  => 'Betasyntax\Router\MiddlewareService',
-    'config'      => 'Betasyntax\Config',
     'filesystem'  => 'League\Filesystem',
-    'logger'      => 'Betasyntax\Logger\Logger',
-    'debugbar'    => 'Betasyntax\DebugBar\DebugBar',
-    'filesystem'  => 'Betasyntax\Core\MountManager\Mounts',
-    'helpers'     => 'App\Functions'
   ],
   'middleware' => [
-    'auth'        => 'Betasyntax\Authentication',
+    'auth'        => 'App\Middleware\Authentication',
   ]
 ];
