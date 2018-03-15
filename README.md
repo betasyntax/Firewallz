@@ -1,10 +1,11 @@
-# Betasyntax Framework
+# Firewallz - An Open Source Firewall
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/betasyntax/framework/master.svg?style=flat-square)](https://travis-ci.org/betasyntax/framework)
+<!-- [![Build Status](https://img.shields.io/travis/betasyntax/framework/master.svg?style=flat-square)](https://travis-ci.org/betasyntax/framework) -->
 
 This framework is highly experimental. Until I remove this notice please use at your own risk. You have been warned!
 
-The Betasyntax Framework is an easy to use framework based on PHP. It implements the MVC design pattern with easy to read code and a really simple learning curve. I built this taking inspiration from Rails, Laravel and all with mostly drop in components like league/container, Twig, Haml, flash messages, super simple ORM all while trying to keep the main goal of slim, featured and easy to use. 
+
+<!-- The Betasyntax Framework is an easy to use framework based on PHP. It implements the MVC design pattern with easy to read code and a really simple learning curve. I built this taking inspiration from Rails, Laravel and all with mostly drop in components like league/container, Twig, Haml, flash messages, super simple ORM all while trying to keep the main goal of slim, featured and easy to use. 
 
 #### Current features:
 
@@ -17,7 +18,7 @@ The Betasyntax Framework is an easy to use framework based on PHP. It implements
 * Modular Authentication system for quick setups. Don't want to use the built in auth system, you can build your own and inject it into your app.
 * Easyily create menus from a database table with a simple command called WayFinder. Allows for active css tags to be applied to active menu items.
 * Custom PHP Debugbar implementation for even faster development. Easily see all generated sql statements, request variables, exceptions, as well as developer generated errors and messages.
-
+ -->
 ## Installation:
 ```bash
 cd /web/server/root
@@ -28,7 +29,7 @@ Or  you can install the development version:
 git clone https://github.com/betasyntax/betasyntax.git ./
 composer install
 ```
-Next reate a database, edit /conf/config.php to your liking and run the migration to get your dynamic menus working.
+Nex<!-- t reate a database, edit /conf/config.php to your liking and run the migration to get your dynamic menus working.
 ```bash
 vendor/bin/phinx migrate -e development
 ```
@@ -234,6 +235,6 @@ $wayfinder = new \Twig_SimpleFunction('Wayfinder', function ($slug) {
 // now you can use wayfinder any where in your views.
 $view->twig->addFunction($wayfinder);
 ```
-## License
+## License -->
 
 The Betasyntax framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
