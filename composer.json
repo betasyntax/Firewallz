@@ -1,5 +1,5 @@
 {
-    "name": "firewallz/firewallz",
+    "name": "betasyntax/firewallz",
     "description": "Simple router web frontend.",
     "keywords": ["framework", "betasyntax"],
     "license": "MIT",
@@ -26,8 +26,8 @@
     "scripts": {
         "post-install-cmd": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "mv -f ./vendor/betasyntax/betasyntax/* ./",
-            "rm -Rf ./vendor/betasyntax/betasyntax",
+            "mv -f ./vendor/betasyntax/firewallz/* ./",
+            "rm -Rf ./vendor/betasyntax/firewallz",
             "composer install"
         ]
     }
