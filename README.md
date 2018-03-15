@@ -7,11 +7,11 @@ This framework is highly experimental. Until I remove this notice please use at 
 ## Installation:
 ```bash
 cd /web/server/root
-composer create-project betasyntax/betasyntax ./
+composer create-project betasyntax/frewallz ./
 ```
 Or  you can install the development version:
 ```bash
-git clone https://github.com/betasyntax/betasyntax.git ./
+git clone https://github.com/betasyntax/frewallz.git ./
 composer install
 ```
 
