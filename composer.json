@@ -1,10 +1,10 @@
 {
-    "name": "betasyntax/betasyntax",
-    "description": "Beta Syntax Framework.",
-    "keywords": ["framework", "betasyntax"],
+    "name": "betasyntax/firewallz",
+    "description": "Open Source Firewall",
+    "keywords": ["firewall", "router","iptables"],
     "license": "MIT",
     "type": "project",
-    "version": "0.0.2",
+    "version": "0.0.1",
     "require": {
         "php": ">=5.5.9",
         "ext-mbstring":"*",
