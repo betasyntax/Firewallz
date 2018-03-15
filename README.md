@@ -4,6 +4,10 @@
 
 This framework is highly experimental. Until I remove this notice please use at your own risk. You have been warned!
 
+## Requirements:
+- Ubuntu 14.04 or greater.
+- 2 Network Cards, one connected to your WAN and the other connected to your switch.
+
 ## Installation:
 ```bash
 cd /web/server/root
