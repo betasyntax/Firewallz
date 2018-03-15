@@ -26,8 +26,8 @@
     "scripts": {
         "post-install-cmd": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "mv -f ./vendor/betasyntax/betasyntax/* ./",
-            "rm -Rf ./vendor/betasyntax/betasyntax",
+            "mv -f ./vendor/betasyntax/firewallz/* ./",
+            "rm -Rf ./vendor/betasyntax/firewallz",
             "composer install"
         ]
     }
