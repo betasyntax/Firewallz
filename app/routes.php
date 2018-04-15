@@ -76,13 +76,13 @@ return [
 
   ['GET', '/network',               'index@NetworkController'],
   ['GET', '/network/interfaces',    'interfaces@NetworkController'],
-  ['GET', '/network/firewall',      'index@IpTablesController'],
-  ['GET', '/network/dns',           'index@DnsController'],
+  ['GET', '/network/firewall/port-forwarding',      'index@IpTablesController'],
+  ['GET', '/network/dhcp',           'index@DhcpController'],
   ['POST', '/network/dns/update',   'updateHost@DnsController'],
   ['GET', '/network/dns/getHosts', 'getHosts@DnsController'],
   ['GET', '/network/dns/del/[i:id]', 'deleteHost@DnsController'],
   ['POST', '/network/dns/add', 'addHost@DnsController'],
   ['GET', '/network/dns/update-hosts', 'updateDnsDhcp@DnsController'],
-  ['GET', '/network/dhcp/leases', 'index@DhcpController'],
+  ['GET', '/network/dhcp/leases', 'leases@DhcpController'],
   ['GET', '/network/dhcp/getleases', 'getLeases@DhcpController'],
 ];

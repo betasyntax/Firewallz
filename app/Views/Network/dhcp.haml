@@ -1,40 +1,53 @@
 - extends 'Layouts/layout.haml'
 - block title
-DNS
+Dhcp
 - endblock
 -block heading
-%h2 DNS
+%h2 Dhcp
 - endblock
 - block body
 .row
   .col-md-12
-    %table#data.table.table-hover.table-condensed{:width=>'100%'}
+    %button#update-dnsmasq Reload Dhcp Server
+.row
+  .col-md-12
+    %table#data.table.table-hover.table-condensed
 
 - endblock
 
 - block jsFooter
 %script{:src=>"/js/inlineTabler.js", :type=>'text/javascript'}
 :javascript
-  var header = ['Mac Address','IP Address','Hostname'];
-  var columns = ['physical_address','ip_address','hostname'];
+  var header = ['Id','Hostname','Ip Address','Mac Address','Status'];
+  var columns = ['id','hostname','ip_address','physical_address','status']
   $('table#data').inlineTabler({
-    'editor':false,
-    'option':true,
-    'options': [
-      ['type',
-        ['option'],
-       'value',
-        ['create-static-host']
+    'editor':true,
+    'header':header, 
+    'protected':[0],
+    'methodType':'GET',
+    'dataUrl':'/network/dns/getHosts',
+    'updateUrl':'/network/dns/update',
+    'addUrl':'/network/dns/add',
+    'delUrl':'/network/dns/del',
+    'columns':columns,
+    'rowsPerPage':10,
+    'tableName':'dhcps',
+    'fieldTypes': [
+      ['4','option',
+        [['Active','enabled'],
+        ['Disabled','disabled']]
       ]
     ],
-    'header':header, 
-    'methodType':'GET',
-    'dataUrl':'/network/dhcp/getleases',
-    'columns':columns,
-    'rowsPerPage':15,
     'init':true,
-    'rowsPerPage':10,
-    'protected':[0]
+    'updateAfter':function(){
+      $('#update-dnsmasq').attr('class','');
+    }
+  });
+  $('#update-dnsmasq').click(function(e) {
+    $.get('/network/dns/update-hosts', function( data ) {
+      console.log( data );
+      alert( "ReLoad was performed." );
+    });
   });
 
 - endblock

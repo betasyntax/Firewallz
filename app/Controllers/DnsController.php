@@ -14,21 +14,6 @@ class DnsController extends Controller
   {
     $this->middleware = ['auth'];
   }
-
-  public function index() 
-  {
-    $modelDhcp = new Dhcp;
-    $select = $modelDhcp->raw( 'SELECT * FROM dhcps ORDER BY hostname;' );
-    $data=array();
-    foreach ($select as $row) {
-      $data[] = $row;
-    }
-    $c = array(
-      'slug'=>'dns',
-      'dhcphost'=>$data,
-    );
-    return view('Network/dns.haml',$c);
-  }
   
   public function getHosts() 
   {

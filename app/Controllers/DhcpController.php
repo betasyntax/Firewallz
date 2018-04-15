@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Dhcp;
 
 class DhcpController extends Controller
 {
@@ -13,12 +14,27 @@ class DhcpController extends Controller
     $this->middleware = ['auth'];
   }
 
-  public function index($id) 
+  public function index() 
+  {
+    $modelDhcp = new Dhcp;
+    $select = $modelDhcp->raw( 'SELECT * FROM dhcps ORDER BY hostname;' );
+    $data=array();
+    foreach ($select as $row) {
+      $data[] = $row;
+    }
+    $c = array(
+      'slug'=>'dhcp',
+      'dhcphost'=>$data,
+    );
+    return view('Network/dhcp.haml',$c);
+  }
+
+  public function leases($id) 
   {
     $c = array(
       'slug'=>'dhcp-leases',
     );
-    return view('Network/dhcp.haml',$c);
+    return view('Network/dhcp_leases.haml',$c);
   }
   
   public static function getLeases() {
